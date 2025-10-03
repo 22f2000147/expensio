@@ -46,70 +46,74 @@ const TodoForm = ({ onTodoAdded }) => {
     <div className="todo-form-container">
       <h2>Add New Todo</h2>
       <form onSubmit={handleSubmit} className="todo-form">
-        <div className="form-group">
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter todo title..."
-            className="todo-input"
-            disabled={loading}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            placeholder="Enter category (e.g., Work, Personal, Shopping)..."
-            className="todo-input"
-            disabled={loading}
-          />
-        </div>
-        <div className="form-group">
-          <select
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-            className="priority-select"
-            disabled={loading}
-          >
-            <option value="Low">🔵 Low</option>
-            <option value="Medium">🟡 Medium</option>
-            <option value="High">🔴 High</option>
-          </select>
-        </div>
-        <div className="form-group checkbox-group">
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              checked={hasDueDate}
-              onChange={(e) => setHasDueDate(e.target.checked)}
-              disabled={loading}
-              className="due-date-checkbox"
-            />
-            Set due date
-          </label>
-        </div>
-        {hasDueDate && (
+        <div className="form-row">
           <div className="form-group">
-            <DatePicker
-              selected={dueDate}
-              onChange={(date) => setDueDate(date)}
-              dateFormat="yyyy-MM-dd"
-              placeholderText="Select due date"
-              minDate={new Date()}
-              className="date-picker"
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter todo title..."
+              className="todo-input"
               disabled={loading}
             />
           </div>
-        )}
-        <button
-          type="submit"
-          className="add-button"
-          disabled={loading || !title.trim()}
-        >
-          {loading ? 'Adding...' : 'Add Todo'}
-        </button>
+          <div className="form-group">
+            <input
+              type="text"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Enter category (e.g., Work, Personal, Shopping)..."
+              className="todo-input"
+              disabled={loading}
+            />
+          </div>
+          <div className="form-group">
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className="priority-select"
+              disabled={loading}
+            >
+              <option value="Low">🔵 Low</option>
+              <option value="Medium">🟡 Medium</option>
+              <option value="High">🔴 High</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            className="add-button"
+            disabled={loading || !title.trim()}
+          >
+            {loading ? 'Adding...' : 'Add Todo'}
+          </button>
+        </div>
+        <div className="due-date-row">
+          <div className="due-date-section">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={hasDueDate}
+                onChange={(e) => setHasDueDate(e.target.checked)}
+                disabled={loading}
+                className="due-date-checkbox"
+              />
+              Has Due Date
+            </label>
+          </div>
+          {hasDueDate && (
+            <div className="date-picker-section">
+              <DatePicker
+                selected={dueDate}
+                onChange={(date) => setDueDate(date)}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="Select due date"
+                minDate={new Date()}
+                className="date-picker"
+                disabled={loading}
+              />
+            </div>
+          )}
+        </div>
       </form>
     </div>
   );

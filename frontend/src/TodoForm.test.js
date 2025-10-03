@@ -47,7 +47,7 @@ describe('TodoForm with Due Date', () => {
   test('renders due date checkbox', () => {
     render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
 
-    const checkbox = screen.getByLabelText('Set due date');
+    const checkbox = screen.getByLabelText('Has Due Date');
     expect(checkbox).toBeInTheDocument();
     expect(checkbox).not.toBeChecked();
   });
@@ -62,7 +62,7 @@ describe('TodoForm with Due Date', () => {
   test('renders date picker when checkbox is checked', () => {
     render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
 
-    const checkbox = screen.getByLabelText('Set due date');
+    const checkbox = screen.getByLabelText('Has Due Date');
     fireEvent.click(checkbox);
 
     const datePicker = screen.getByTestId('date-picker');
@@ -74,7 +74,7 @@ describe('TodoForm with Due Date', () => {
     render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
 
     // First check the checkbox
-    const checkbox = screen.getByLabelText('Set due date');
+    const checkbox = screen.getByLabelText('Has Due Date');
     fireEvent.click(checkbox);
 
     const datePicker = screen.getByTestId('date-picker');
@@ -104,7 +104,7 @@ describe('TodoForm with Due Date', () => {
     const titleInput = screen.getByPlaceholderText('Enter todo title...');
     const categoryInput = screen.getByPlaceholderText('Enter category (e.g., Work, Personal, Shopping)...');
     const prioritySelect = screen.getByDisplayValue('🟡 Medium');
-    const checkbox = screen.getByLabelText('Set due date');
+    const checkbox = screen.getByLabelText('Has Due Date');
     const datePicker = screen.getByTestId('date-picker');
     const submitButton = screen.getByText('Add Todo');
 
@@ -147,7 +147,7 @@ describe('TodoForm with Due Date', () => {
     const titleInput = screen.getByPlaceholderText('Enter todo title...');
     const categoryInput = screen.getByPlaceholderText('Enter category (e.g., Work, Personal, Shopping)...');
     const prioritySelect = screen.getByDisplayValue('🟡 Medium');
-    const checkbox = screen.getByLabelText('Set due date');
+    const checkbox = screen.getByLabelText('Has Due Date');
     const submitButton = screen.getByText('Add Todo');
 
     fireEvent.change(titleInput, { target: { value: 'Test Todo without Due Date' } });
@@ -187,7 +187,7 @@ describe('TodoForm with Due Date', () => {
     const titleInput = screen.getByPlaceholderText('Enter todo title...');
     const categoryInput = screen.getByPlaceholderText('Enter category (e.g., Work, Personal, Shopping)...');
     const prioritySelect = screen.getByDisplayValue('🟡 Medium');
-    const checkbox = screen.getByLabelText('Set due date');
+    const checkbox = screen.getByLabelText('Has Due Date');
     const submitButton = screen.getByText('Add Todo');
 
     // Fill and submit form
