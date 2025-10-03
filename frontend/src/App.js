@@ -103,6 +103,24 @@ const App = () => {
     return ['All', ...new Set(categories)];
   };
 
+  // Get emoji for category display
+  const getCategoryEmoji = (category) => {
+    if (category === 'All') return '📋';
+    const emojiMap = {
+      'General': '📋',
+      'Work': '💼',
+      'Personal': '👤',
+      'Shopping': '🛒',
+      'Health': '🏥',
+      'Finance': '💰',
+      'Education': '📚',
+      'Travel': '✈️',
+      'Home': '🏠',
+      'Urgent': '🚨'
+    };
+    return emojiMap[category] || '📋';
+  };
+
   // Get unique priorities for filter dropdown
   const getUniquePriorities = () => {
     const priorities = todos.map(todo => todo.priority).filter(Boolean);
@@ -152,10 +170,10 @@ const App = () => {
               className="category-filter"
               aria-label="Filter todos by category"
             >
-              <option value="">All Categories</option>
+              <option value="">📋 All Categories</option>
               {getUniqueCategories().map(category => (
                 <option key={category} value={category === 'All' ? '' : category}>
-                  {category}
+                  {category === 'All' ? '📋 All Categories' : `${getCategoryEmoji(category)} ${category}`}
                 </option>
               ))}
             </select>

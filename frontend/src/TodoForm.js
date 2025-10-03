@@ -5,11 +5,43 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const TodoForm = ({ onTodoAdded }) => {
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('General');
+  const [categoryMode, setCategoryMode] = useState('dropdown'); // 'dropdown' or 'custom'
+  const [selectedCategory, setSelectedCategory] = useState('General');
+  const [customCategory, setCustomCategory] = useState('');
   const [priority, setPriority] = useState('Medium');
   const [hasDueDate, setHasDueDate] = useState(false);
   const [dueDate, setDueDate] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Predefined categories with emojis
+  const predefinedCategories = [
+    '📋 General',
+    '💼 Work',
+    '👤 Personal',
+    '🛒 Shopping',
+    '🏥 Health',
+    '💰 Finance',
+    '📚 Education',
+    '✈️ Travel',
+    '🏠 Home',
+    '🚨 Urgent'
+  ];
+
+  // Get the actual category value
+  const getCategoryValue = () => {
+    return categoryMode === 'custom' ? customCategory.trim() : selectedCategory;
+  };
+
+  // Handle category change
+  const handleCategoryChange = (value) => {
+    if (value === 'Custom') {
+      setCategoryMode('custom');
+      setCustomCategory('');
+    } else {
+      setSelectedCategory(value);
+      setCategoryMode('dropdown');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,16 +53,23 @@ const TodoForm = ({ onTodoAdded }) => {
     setLoading(true);
 
     try {
+      const categoryValue = getCategoryValue();
+      if (!categoryValue) {
+        alert('Please select a category or enter a custom category');
+        return;
+      }
+
       const response = await axios.post('http://localhost:5000/api/todos', {
         title: title.trim(),
-        category: category.trim(),
+        category: categoryValue,
         priority: priority,
         dueDate: hasDueDate && dueDate ? dueDate.toISOString().split('T')[0] : null
       });
 
       onTodoAdded(response.data);
       setTitle('');
-      setCategory('General');
+      setSelectedCategory('General');
+      setCustomCategory('');
       setPriority('Medium');
       setHasDueDate(false);
       setDueDate(null);
@@ -62,16 +101,31 @@ const TodoForm = ({ onTodoAdded }) => {
             />
           </div>
           <div className="form-group">
-            <input
-              type="text"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder="Enter category (e.g., Work, Personal, Shopping)..."
-              className="todo-input"
+            <select
+              value={selectedCategory}
+              onChange={(e) => handleCategoryChange(e.target.value)}
+              className="category-select"
               disabled={loading}
-              aria-label="Todo category"
-              maxLength={50}
-            />
+              aria-label="Select todo category"
+            >
+              {predefinedCategories.map(cat => (
+                <option key={cat} value={cat}>
+                  {cat === 'Custom' ? '📝 Custom' : cat}
+                </option>
+              ))}
+            </select>
+            {selectedCategory === 'Custom' && (
+              <input
+                type="text"
+                value={customCategory}
+                onChange={(e) => setCustomCategory(e.target.value)}
+                placeholder="Enter custom category..."
+                className="custom-category-input"
+                disabled={loading}
+                aria-label="Custom category"
+                maxLength={50}
+              />
+            )}
           </div>
           <div className="form-group">
             <select
