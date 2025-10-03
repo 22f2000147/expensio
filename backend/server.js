@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // GET /api/todos - Get all todos
 app.get('/api/todos', (req, res) => {
-  const { search, category } = req.query;
+  const { search, category, priority, sortBy = 'created_at', sortOrder = 'DESC' } = req.query;
 
   let sql = 'SELECT * FROM todos WHERE 1=1';
   let params = [];
@@ -30,7 +30,19 @@ app.get('/api/todos', (req, res) => {
     params.push(category);
   }
 
-  sql += ' ORDER BY created_at DESC';
+  if (priority) {
+    sql += ' AND priority = ?';
+    params.push(priority);
+  }
+
+  // Validate sortBy parameter
+  const validSortFields = ['created_at', 'title', 'category', 'priority', 'completed'];
+  const sortField = validSortFields.includes(sortBy) ? sortBy : 'created_at';
+
+  // Validate sortOrder parameter
+  const sortDirection = sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
+  sql += ` ORDER BY ${sortField} ${sortDirection}`;
 
   db.all(sql, params, (err, rows) => {
     if (err) {
@@ -43,14 +55,20 @@ app.get('/api/todos', (req, res) => {
 
 // POST /api/todos - Create a new todo
 app.post('/api/todos', (req, res) => {
-  const { title, category = 'General' } = req.body;
+  const { title, category = 'General', priority = 'Medium' } = req.body;
 
   if (!title) {
     return res.status(400).json({ error: 'Title is required' });
   }
 
-  const sql = 'INSERT INTO todos (title, category) VALUES (?, ?)';
-  db.run(sql, [title, category], function(err) {
+  // Validate priority
+  const validPriorities = ['Low', 'Medium', 'High'];
+  if (!validPriorities.includes(priority)) {
+    return res.status(400).json({ error: 'Priority must be one of: Low, Medium, High' });
+  }
+
+  const sql = 'INSERT INTO todos (title, category, priority) VALUES (?, ?, ?)';
+  db.run(sql, [title, category, priority], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -67,41 +85,53 @@ app.post('/api/todos', (req, res) => {
   });
 });
 
-// PUT /api/todos/:id - Update a todo (mark as completed or update title/category)
+// PUT /api/todos/:id - Update a todo (mark as completed or update title/category/priority)
 app.put('/api/todos/:id', (req, res) => {
   const { id } = req.params;
-  const { title, category, completed } = req.body;
+  const { title, category, priority, completed } = req.body;
 
-  if (title === undefined && category === undefined && completed === undefined) {
-    return res.status(400).json({ error: 'Title, category, or completed status is required' });
+  if (title === undefined && category === undefined && priority === undefined && completed === undefined) {
+    return res.status(400).json({ error: 'Title, category, priority, or completed status is required' });
+  }
+
+  // Validate priority if provided
+  if (priority !== undefined) {
+    const validPriorities = ['Low', 'Medium', 'High'];
+    if (!validPriorities.includes(priority)) {
+      return res.status(400).json({ error: 'Priority must be one of: Low, Medium, High' });
+    }
   }
 
   let sql, params;
 
-  if (title !== undefined && category !== undefined && completed !== undefined) {
-    sql = 'UPDATE todos SET title = ?, category = ?, completed = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    params = [title, category, completed, id];
-  } else if (title !== undefined && category !== undefined) {
-    sql = 'UPDATE todos SET title = ?, category = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    params = [title, category, id];
-  } else if (title !== undefined && completed !== undefined) {
-    sql = 'UPDATE todos SET title = ?, completed = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    params = [title, completed, id];
-  } else if (category !== undefined && completed !== undefined) {
-    sql = 'UPDATE todos SET category = ?, completed = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    params = [category, completed, id];
-  } else if (title !== undefined) {
-    sql = 'UPDATE todos SET title = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    params = [title, id];
-  } else if (category !== undefined) {
-    sql = 'UPDATE todos SET category = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    params = [category, id];
-  } else {
-    sql = 'UPDATE todos SET completed = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    params = [completed, id];
+  // Handle all combinations of fields that might be updated
+  const fieldsToUpdate = [];
+  const values = [];
+
+  if (title !== undefined) {
+    fieldsToUpdate.push('title = ?');
+    values.push(title);
+  }
+  if (category !== undefined) {
+    fieldsToUpdate.push('category = ?');
+    values.push(category);
+  }
+  if (priority !== undefined) {
+    fieldsToUpdate.push('priority = ?');
+    values.push(priority);
+  }
+  if (completed !== undefined) {
+    fieldsToUpdate.push('completed = ?');
+    values.push(completed);
   }
 
-  db.run(sql, params, function(err) {
+  // Always update the updated_at timestamp
+  fieldsToUpdate.push('updated_at = CURRENT_TIMESTAMP');
+  values.push(id);
+
+  sql = `UPDATE todos SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
+
+  db.run(sql, values, function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
       return;

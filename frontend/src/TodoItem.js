@@ -85,6 +85,14 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
             </span>
           )}
         </div>
+        <div className="todo-priority">
+          <span
+            className={`priority-badge priority-${todo.priority?.toLowerCase() || 'medium'}`}
+            title={`Priority: ${todo.priority || 'Medium'}`}
+          >
+            {todo.priority === 'Low' ? '🔵' : todo.priority === 'Medium' ? '🟡' : '🔴'} {todo.priority || 'Medium'}
+          </span>
+        </div>
         <span className="todo-date">
           {new Date(todo.created_at).toLocaleDateString()}
         </span>
