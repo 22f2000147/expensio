@@ -111,39 +111,61 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
         {isEditing ? (
           <>
             <div className="edit-form">
-              <input
-                type="text"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="title-edit-input"
-                placeholder="Todo title..."
-                autoFocus
-              />
-              <input
-                type="text"
-                value={editCategory}
-                onChange={(e) => setEditCategory(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="category-edit-input"
-                placeholder="Category..."
-              />
-              <select
-                value={editPriority}
-                onChange={(e) => setEditPriority(e.target.value)}
-                className="priority-edit-select"
-              >
-                <option value="Low">🔵 Low</option>
-                <option value="Medium">🟡 Medium</option>
-                <option value="High">🔴 High</option>
-              </select>
-              <input
-                type="date"
-                value={editDueDate}
-                onChange={(e) => setEditDueDate(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="date-edit-input"
-              />
+              <div className="form-row">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    className="todo-input"
+                    placeholder="Todo title..."
+                    autoFocus
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    value={editCategory}
+                    onChange={(e) => setEditCategory(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    className="todo-input"
+                    placeholder="Category..."
+                  />
+                </div>
+                <div className="form-group">
+                  <select
+                    value={editPriority}
+                    onChange={(e) => setEditPriority(e.target.value)}
+                    className="priority-select"
+                  >
+                    <option value="Low">🔵 Low</option>
+                    <option value="Medium">🟡 Medium</option>
+                    <option value="High">🔴 High</option>
+                  </select>
+                </div>
+                <button
+                  onClick={handleSave}
+                  className="add-button"
+                >
+                  Save
+                </button>
+              </div>
+              <div className="due-date-row">
+                <div className="form-group">
+                  <input
+                    type="date"
+                    value={editDueDate}
+                    onChange={(e) => setEditDueDate(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    className="todo-input"
+                    placeholder="Due date (optional)"
+                  />
+                </div>
+                <button onClick={handleCancel} className="cancel-button">
+                  Cancel
+                </button>
+              </div>
             </div>
           </>
         ) : (
@@ -178,7 +200,7 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
       <div className="todo-actions">
         {isEditing ? (
           <>
-            <button onClick={handleSave} className="save-button">
+            <button onClick={handleSave} className="add-button">
               Save
             </button>
             <button onClick={handleCancel} className="cancel-button">

@@ -55,6 +55,10 @@ const TodoForm = ({ onTodoAdded }) => {
               placeholder="Enter todo title..."
               className="todo-input"
               disabled={loading}
+              aria-label="Todo title"
+              aria-required="true"
+              aria-describedby="title-help"
+              maxLength={100}
             />
           </div>
           <div className="form-group">
@@ -65,6 +69,8 @@ const TodoForm = ({ onTodoAdded }) => {
               placeholder="Enter category (e.g., Work, Personal, Shopping)..."
               className="todo-input"
               disabled={loading}
+              aria-label="Todo category"
+              maxLength={50}
             />
           </div>
           <div className="form-group">
@@ -73,6 +79,7 @@ const TodoForm = ({ onTodoAdded }) => {
               onChange={(e) => setPriority(e.target.value)}
               className="priority-select"
               disabled={loading}
+              aria-label="Select todo priority"
             >
               <option value="Low">🔵 Low</option>
               <option value="Medium">🟡 Medium</option>
@@ -83,6 +90,7 @@ const TodoForm = ({ onTodoAdded }) => {
             type="submit"
             className="add-button"
             disabled={loading || !title.trim()}
+            aria-label={loading ? 'Adding todo...' : 'Add new todo'}
           >
             {loading ? 'Adding...' : 'Add Todo'}
           </button>
@@ -96,6 +104,7 @@ const TodoForm = ({ onTodoAdded }) => {
                 onChange={(e) => setHasDueDate(e.target.checked)}
                 disabled={loading}
                 className="due-date-checkbox"
+                aria-label="Set due date for todo"
               />
               Has Due Date
             </label>
@@ -110,6 +119,7 @@ const TodoForm = ({ onTodoAdded }) => {
                 minDate={new Date()}
                 className="date-picker"
                 disabled={loading}
+                aria-label="Select todo due date"
               />
             </div>
           )}
