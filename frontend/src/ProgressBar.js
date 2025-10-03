@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './ProgressBar.css';
 
 const ProgressBar = ({ todos }) => {
+  const [showConfetti, setShowConfetti] = useState(false);
   const [progress, setProgress] = useState(0);
-
-  // Debug: Force show confetti for testing
-  const [showConfetti, setShowConfetti] = useState(true);
 
   // Calculate progress percentage
   const calculateProgress = () => {
@@ -17,21 +15,12 @@ const ProgressBar = ({ todos }) => {
   // Update progress when todos change
   useEffect(() => {
     const newProgress = calculateProgress();
-    console.log('ProgressBar Debug:', {
-      todosCount: todos.length,
-      completedCount: todos.filter(todo => todo.completed).length,
-      newProgress,
-      showConfetti,
-      todos: todos.map(t => ({ title: t.title, completed: t.completed }))
-    });
     setProgress(newProgress);
 
     // Trigger confetti animation when reaching 100%
     if (newProgress === 100 && todos.length > 0) {
-      console.log('🎉 TRIGGERING CONFETTI!');
       setShowConfetti(true);
       setTimeout(() => {
-        console.log('🛑 STOPPING CONFETTI!');
         setShowConfetti(false);
       }, 3000);
     }
@@ -39,27 +28,28 @@ const ProgressBar = ({ todos }) => {
 
   // Generate confetti particles
   const renderConfetti = () => {
-    console.log('🎊 RENDERING CONFETTI PARTICLES!');
     if (!showConfetti) return null;
 
     const particles = [];
     const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd'];
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 20; i++) {
+      // Create very tightly controlled x-offsets that stay within todo section boundaries
+      const xOffset = (Math.random() - 0.5) * 60; // Maximum containment within todo section
+
       particles.push(
         <div
           key={i}
           className="confetti-particle"
           style={{
-            '--delay': `${Math.random() * 2}s`,
+            '--delay': `${Math.random() * 0.8}s`,
             '--rotation': `${Math.random() * 360}deg`,
-            '--x-offset': `${(Math.random() - 0.5) * 200}px`,
+            '--x-offset': `${xOffset}px`,
             backgroundColor: colors[Math.floor(Math.random() * colors.length)]
           }}
         />
       );
     }
-    console.log(`Created ${particles.length} confetti particles`);
     return particles;
   };
 
