@@ -140,6 +140,8 @@ const App = () => {
               onChange={handleSearchChange}
               placeholder="Search todos..."
               className="search-input"
+              aria-label="Search todos"
+              role="searchbox"
             />
           </div>
 
@@ -148,6 +150,7 @@ const App = () => {
               value={categoryFilter}
               onChange={handleCategoryFilterChange}
               className="category-filter"
+              aria-label="Filter todos by category"
             >
               <option value="">All Categories</option>
               {getUniqueCategories().map(category => (
@@ -163,6 +166,7 @@ const App = () => {
               value={priorityFilter}
               onChange={handlePriorityFilterChange}
               className="priority-filter"
+              aria-label="Filter todos by priority"
             >
               <option value="">All Priorities</option>
               {getUniquePriorities().map(priority => (
@@ -178,6 +182,7 @@ const App = () => {
               value={sortBy}
               onChange={(e) => handleSortChange(e.target.value)}
               className="sort-select"
+              aria-label="Sort todos by"
             >
               <option value="created_at">Date Created</option>
               <option value="title">Title</option>
@@ -190,13 +195,19 @@ const App = () => {
               onClick={handleSortOrderToggle}
               className="sort-order-button"
               title={`Sort ${sortOrder === 'ASC' ? 'Descending' : 'Ascending'}`}
+              aria-label={`Sort ${sortOrder === 'ASC' ? 'Descending' : 'Ascending'}`}
+              aria-pressed={sortOrder === 'DESC'}
             >
               {sortOrder === 'ASC' ? '↑' : '↓'}
             </button>
           </div>
 
           {(searchTerm || categoryFilter || priorityFilter) && (
-            <button onClick={clearFilters} className="clear-filters-button">
+            <button
+              onClick={clearFilters}
+              className="clear-filters-button"
+              aria-label="Clear all filters"
+            >
               Clear Filters
             </button>
           )}
@@ -207,9 +218,13 @@ const App = () => {
         <TodoForm onTodoAdded={handleTodoAdded} />
 
         {error && (
-          <div className="error-message">
+          <div className="error-message" role="alert" aria-live="polite">
             <p>{error}</p>
-            <button onClick={fetchTodos} className="retry-button">
+            <button
+              onClick={fetchTodos}
+              className="retry-button"
+              aria-label="Retry loading todos"
+            >
               Retry
             </button>
           </div>

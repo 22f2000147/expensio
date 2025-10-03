@@ -1,37 +1,42 @@
 /* CSS Custom Properties for Theme Variables */
 :root {
-  /* Light theme colors */
-  --bg-primary: #f5f5f5;
+  /* Modern Light theme colors */
+  --bg-primary: #fafbfc;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #f9f9f9;
+  --bg-tertiary: #f8f9fa;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-glass: rgba(255, 255, 255, 0.25);
   --bg-header: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --bg-button-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --bg-button-success: #4caf50;
-  --bg-button-warning: #ff9800;
-  --bg-button-danger: #f44336;
-  --bg-button-clear: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  --bg-button-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --bg-button-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --bg-button-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  --bg-button-clear: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 
-  --text-primary: #333333;
-  --text-secondary: #666666;
-  --text-muted: #999999;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
   --text-inverse: #ffffff;
-  --text-error: #c62828;
+  --text-error: #dc2626;
 
-  --border-primary: #dddddd;
-  --border-secondary: #eeeeee;
+  --border-primary: #e5e7eb;
+  --border-secondary: #f3f4f6;
   --border-focus: #667eea;
+  --border-glass: rgba(255, 255, 255, 0.2);
 
-  --shadow-light: rgba(0, 0, 0, 0.1);
-  --shadow-medium: rgba(0, 0, 0, 0.15);
-  --shadow-focus: rgba(102, 126, 234, 0.1);
-  --shadow-button: rgba(102, 126, 234, 0.3);
+  --shadow-light: rgba(0, 0, 0, 0.05);
+  --shadow-medium: rgba(0, 0, 0, 0.1);
+  --shadow-focus: rgba(102, 126, 234, 0.15);
+  --shadow-button: rgba(102, 126, 234, 0.2);
   --shadow-button-hover: rgba(102, 126, 234, 0.3);
-  --shadow-clear-hover: rgba(238, 90, 82, 0.3);
+  --shadow-clear-hover: rgba(220, 38, 38, 0.2);
+  --shadow-card: rgba(0, 0, 0, 0.08);
+  --shadow-glass: rgba(255, 255, 255, 0.1);
 
-  --accent-blue: #2196f3;
-  --accent-green: #4caf50;
-  --accent-orange: #ff9800;
-  --accent-red: #f44336;
+  --accent-blue: #3b82f6;
+  --accent-green: #10b981;
+  --accent-orange: #f59e0b;
+  --accent-red: #ef4444;
   --accent-purple: #667eea;
 
   /* Priority colors */
@@ -63,6 +68,8 @@
   --bg-primary: #121212;
   --bg-secondary: #1e1e1e;
   --bg-tertiary: #2d2d2d;
+  --bg-card: rgba(30, 30, 30, 0.8);
+  --bg-glass: rgba(18, 18, 18, 0.25);
   --bg-header: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
   --bg-button-primary: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
   --bg-button-success: #388e3c;
@@ -79,6 +86,7 @@
   --border-primary: #404040;
   --border-secondary: #333333;
   --border-focus: #4a5568;
+  --border-glass: rgba(255, 255, 255, 0.1);
 
   --shadow-light: rgba(0, 0, 0, 0.3);
   --shadow-medium: rgba(0, 0, 0, 0.4);
@@ -86,6 +94,8 @@
   --shadow-button: rgba(74, 85, 104, 0.4);
   --shadow-button-hover: rgba(74, 85, 104, 0.5);
   --shadow-clear-hover: rgba(211, 47, 47, 0.4);
+  --shadow-card: rgba(0, 0, 0, 0.4);
+  --shadow-glass: rgba(0, 0, 0, 0.1);
 
   --accent-blue: #64b5f6;
   --accent-green: #66bb6a;
@@ -94,22 +104,22 @@
   --accent-purple: #4a5568;
 
   /* Priority colors - darker theme */
-  --priority-low-bg: rgba(100, 181, 246, 0.15);
-  --priority-low-border: rgba(100, 181, 246, 0.3);
-  --priority-low-text: #64b5f6;
+  --priority-low-bg: rgba(33, 150, 243, 0.1);
+  --priority-low-border: rgba(33, 150, 243, 0.3);
+  --priority-low-text: #2196f3;
 
-  --priority-medium-bg: rgba(255, 183, 77, 0.15);
-  --priority-medium-border: rgba(255, 183, 77, 0.3);
-  --priority-medium-text: #ffb74d;
+  --priority-medium-bg: rgba(255, 193, 7, 0.1);
+  --priority-medium-border: rgba(255, 193, 7, 0.3);
+  --priority-medium-text: #ffc107;
 
-  --priority-high-bg: rgba(239, 83, 80, 0.15);
-  --priority-high-border: rgba(239, 83, 80, 0.3);
-  --priority-high-text: #ef5350;
+  --priority-high-bg: rgba(244, 67, 54, 0.1);
+  --priority-high-border: rgba(244, 67, 54, 0.3);
+  --priority-high-text: #f44336;
 
   /* Status colors - darker theme */
-  --status-completed-bg: #1f2f1f;
-  --status-completed-border: #66bb6a;
-  --status-pending-border: #4a5568;
+  --status-completed-bg: #1b2f1f;
+  --status-completed-border: #4caf50;
+  --status-pending-border: #667eea;
 }
 
 /* Base styles with theme variables */
@@ -131,10 +141,11 @@ body {
   transition: background-color var(--transition-medium), color var(--transition-medium);
 }
 
+
 .app {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px 20px;
   transition: background-color var(--transition-medium), color var(--transition-medium);
 }
 
@@ -142,27 +153,48 @@ body {
   position: relative; /* For absolute positioning of progress bar */
 }
 
-/* Header Styles */
+/* Modern Header Styles */
 .app-header {
   text-align: center;
   margin-bottom: 40px;
-  padding: 20px;
+  padding: 40px 30px;
   background: var(--bg-header);
   color: var(--text-inverse);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px var(--shadow-light);
-  transition: background var(--transition-medium), box-shadow var(--transition-medium);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px var(--shadow-medium);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-medium);
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 20px;
+  pointer-events: none;
 }
 
 .app-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  font-weight: 300;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.025em;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .app-header p {
-  font-size: 1.1rem;
-  opacity: 0.9;
+  font-size: 1.2rem;
+  opacity: 0.95;
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
 }
 
 /* Search and Filter Section */
@@ -389,16 +421,26 @@ body {
   transition: var(--transition-smooth);
 }
 
+.todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
 .todo-item.completed {
   background: var(--status-completed-bg);
   border-left-color: var(--status-completed-border);
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .todo-item.completed .todo-title {
    text-decoration: line-through;
    color: var(--text-secondary);
- }
+}
+
+.todo-item.completed:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 24px var(--shadow-light);
+}
 
 .todo-content {
   display: flex;
@@ -414,8 +456,9 @@ body {
 }
 
 .todo-date {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .todo-priority {
@@ -529,7 +572,6 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(4px);
   animation: fadeIn 0.3s ease;
 }
 
@@ -543,6 +585,19 @@ body {
   overflow: hidden;
   animation: slideInUp 0.3s ease;
   border: 1px solid var(--border-secondary);
+  position: relative;
+}
+
+.edit-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 20px;
+  pointer-events: none;
 }
 
 .edit-modal-header {
@@ -552,16 +607,19 @@ body {
   padding: 20px 24px;
   border-bottom: 1px solid var(--border-primary);
   background: var(--bg-tertiary);
+  position: relative;
+  z-index: 1;
 }
 
 .edit-modal-header h3 {
   margin: 0;
   color: var(--text-primary);
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  letter-spacing: -0.025em;
 }
 
 .edit-modal-close {
@@ -586,6 +644,8 @@ body {
   padding: 24px;
   max-height: 60vh;
   overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .edit-form-group {
@@ -644,6 +704,8 @@ body {
   padding: 20px 24px;
   border-top: 1px solid var(--border-primary);
   background: var(--bg-tertiary);
+  position: relative;
+  z-index: 1;
 }
 
 .edit-modal-cancel {
@@ -656,6 +718,8 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
 }
 
 .edit-modal-save {
@@ -669,6 +733,8 @@ body {
   cursor: pointer;
   transition: all var(--transition-fast);
   box-shadow: 0 2px 8px var(--shadow-button);
+  position: relative;
+  overflow: hidden;
 }
 
 .edit-modal-cancel:hover {
@@ -702,6 +768,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.emoji-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+  transition: left 0.5s;
+}
+
+.emoji-button:hover::before {
+  left: 100%;
 }
 
 .emoji-button:hover {
@@ -849,23 +932,33 @@ body {
   font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* Modern Responsive Design */
 @media (max-width: 768px) {
   .app {
-    padding: 10px;
+    padding: 15px 10px;
+  }
+
+  .app-header {
+    padding: 30px 20px;
+    margin-bottom: 30px;
   }
 
   .app-header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .app-header p {
+    font-size: 1.1rem;
   }
 
   .search-filter {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
 
   .search-group,
-  .filter-group {
+  .filter-group,
+  .sort-group {
     min-width: unset;
   }
 
@@ -915,11 +1008,16 @@ body {
   .todo-item {
     flex-direction: column;
     align-items: stretch;
-    gap: 15px;
+    gap: 20px;
+    padding: 20px;
   }
 
   .todo-content {
     text-align: center;
+  }
+
+  .todo-title {
+    font-size: 1.1rem;
   }
 
   /* Mobile Edit Modal Styles */
@@ -1083,7 +1181,7 @@ body {
 
 /* Dark theme adjustments for overdue styles */
 [data-theme="dark"] .todo-item.overdue {
- background: rgba(239, 83, 80, 0.1);
+ background: rgba(244, 67, 54, 0.05);
 }
 
 [data-theme="dark"] .overdue-badge {

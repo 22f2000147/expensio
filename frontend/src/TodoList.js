@@ -4,7 +4,7 @@ import TodoItem from './TodoItem';
 const TodoList = ({ todos, onTodoUpdated, onTodoDeleted }) => {
   if (todos.length === 0) {
     return (
-      <div className="todo-list-empty">
+      <div className="todo-list-empty" role="status" aria-live="polite">
         <p>No todos yet. Add one above to get started!</p>
       </div>
     );
@@ -13,7 +13,11 @@ const TodoList = ({ todos, onTodoUpdated, onTodoDeleted }) => {
   return (
     <div className="todo-list-container">
       <h2>Your Todos</h2>
-      <div className="todo-list">
+      <div
+        className="todo-list"
+        role="list"
+        aria-label="Todo list"
+      >
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}

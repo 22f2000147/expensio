@@ -106,20 +106,42 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
   };
 
   return (
-    <div className={`todo-item ${todo.completed ? 'completed' : ''} ${todo.is_overdue ? 'overdue' : ''}`}>
+    <div
+      className={`todo-item ${todo.completed ? 'completed' : ''} ${todo.is_overdue ? 'overdue' : ''}`}
+      role="article"
+      aria-label={`Todo: ${todo.title}`}
+    >
       <div className="todo-content">
         {isEditing ? (
           <>
-            <div className="edit-modal-overlay" onClick={handleCancel}>
-              <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
+            <div
+              className="edit-modal-overlay"
+              onClick={handleCancel}
+              aria-label="Edit todo modal"
+              role="dialog"
+              aria-modal="true"
+            >
+              <div
+                className="edit-modal"
+                onClick={(e) => e.stopPropagation()}
+                role="document"
+              >
                 <div className="edit-modal-header">
                   <h3>✏️ Edit Todo</h3>
-                  <button onClick={handleCancel} className="edit-modal-close" title="Cancel editing">×</button>
+                  <button
+                    onClick={handleCancel}
+                    className="edit-modal-close"
+                    title="Cancel editing"
+                    aria-label="Close edit modal"
+                  >
+                    ×
+                  </button>
                 </div>
                 <div className="edit-modal-body">
                   <div className="edit-form-group">
-                    <label className="edit-form-label">Title</label>
+                    <label className="edit-form-label" htmlFor="edit-title">Title</label>
                     <input
+                      id="edit-title"
                       type="text"
                       value={editTitle}
                       onChange={(e) => setEditTitle(e.target.value)}
@@ -127,25 +149,32 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
                       className="edit-modal-input"
                       placeholder="Enter todo title..."
                       autoFocus
+                      aria-label="Edit todo title"
+                      aria-required="true"
+                      maxLength={100}
                     />
                   </div>
                   <div className="edit-form-group">
-                    <label className="edit-form-label">Category</label>
+                    <label className="edit-form-label" htmlFor="edit-category">Category</label>
                     <input
+                      id="edit-category"
                       type="text"
                       value={editCategory}
                       onChange={(e) => setEditCategory(e.target.value)}
                       onKeyDown={handleKeyPress}
                       className="edit-modal-input"
                       placeholder="Enter category..."
+                      aria-label="Edit todo category"
                     />
                   </div>
                   <div className="edit-form-group">
-                    <label className="edit-form-label">Priority</label>
+                    <label className="edit-form-label" htmlFor="edit-priority">Priority</label>
                     <select
+                      id="edit-priority"
                       value={editPriority}
                       onChange={(e) => setEditPriority(e.target.value)}
                       className="edit-modal-select"
+                      aria-label="Edit todo priority"
                     >
                       <option value="Low">🔵 Low</option>
                       <option value="Medium">🟡 Medium</option>
@@ -153,21 +182,33 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
                     </select>
                   </div>
                   <div className="edit-form-group">
-                    <label className="edit-form-label">Due Date (Optional)</label>
+                    <label className="edit-form-label" htmlFor="edit-due-date">Due Date (Optional)</label>
                     <input
+                      id="edit-due-date"
                       type="date"
                       value={editDueDate}
                       onChange={(e) => setEditDueDate(e.target.value)}
                       onKeyDown={handleKeyPress}
                       className="edit-modal-input edit-modal-date"
+                      aria-label="Edit todo due date"
                     />
                   </div>
                 </div>
                 <div className="edit-modal-footer">
-                  <button onClick={handleCancel} className="edit-modal-cancel" title="Cancel editing">
+                  <button
+                    onClick={handleCancel}
+                    className="edit-modal-cancel"
+                    title="Cancel editing"
+                    aria-label="Cancel editing todo"
+                  >
                     Cancel
                   </button>
-                  <button onClick={handleSave} className="edit-modal-save" title="Save changes">
+                  <button
+                    onClick={handleSave}
+                    className="edit-modal-save"
+                    title="Save changes"
+                    aria-label="Save todo changes"
+                  >
                     Save Changes
                   </button>
                 </div>
@@ -216,7 +257,13 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
         ) : (
           <>
             {!todo.completed && (
-              <button onClick={handleEdit} className="emoji-button edit-button" title="Edit todo">
+              <button
+                onClick={handleEdit}
+                className="emoji-button edit-button"
+                title="Edit todo"
+                aria-label={`Edit todo: ${todo.title}`}
+                disabled={todo.completed}
+              >
                 ✏️
               </button>
             )}
@@ -224,6 +271,8 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
               onClick={handleToggleComplete}
               className={`emoji-button toggle-button ${todo.completed ? 'undo' : 'complete'}`}
               title={todo.completed ? 'Mark as incomplete' : 'Mark as complete'}
+              aria-label={todo.completed ? `Mark "${todo.title}" as incomplete` : `Mark "${todo.title}" as complete`}
+              aria-pressed={todo.completed}
             >
               {todo.completed ? '↩️' : '✔️'}
             </button>
@@ -231,6 +280,7 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
               onClick={handleDelete}
               className="emoji-button delete-button"
               title="Delete todo"
+              aria-label={`Delete todo: ${todo.title}`}
             >
               🗑️
             </button>
