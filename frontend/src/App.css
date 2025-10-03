@@ -138,10 +138,6 @@ body {
   transition: background-color var(--transition-medium), color var(--transition-medium);
 }
 
-.app-content {
-  position: relative; /* For absolute positioning of progress bar */
-}
-
 /* Header Styles */
 .app-header {
   text-align: center;

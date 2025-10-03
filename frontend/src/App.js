@@ -3,7 +3,6 @@ import axios from 'axios';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import ThemeToggle from './ThemeToggle';
-import ProgressBar from './ProgressBar';
 import { ThemeProvider } from './ThemeContext';
 import './App.css';
 
@@ -122,8 +121,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <div className="app-content">
-        <header className="app-header">
+      <header className="app-header">
         <h1>TODO List App</h1>
         <p>A simple todo application built with React and Node.js</p>
         <div style={{ marginTop: '15px' }}>
@@ -220,23 +218,19 @@ const App = () => {
             <p>Loading todos...</p>
           </div>
         ) : (
-          <>
-            <ProgressBar todos={todos} />
-            <TodoList
-              todos={todos}
-              onTodoUpdated={handleTodoUpdated}
-              onTodoDeleted={handleTodoDeleted}
-            />
-          </>
+          <TodoList
+            todos={todos}
+            onTodoUpdated={handleTodoUpdated}
+            onTodoDeleted={handleTodoDeleted}
+          />
         )}
       </main>
 
       <footer className="app-footer">
         <p>Built with React, Node.js, Express, and SQLite</p>
       </footer>
-     </div>
-   </div>
- );
+    </div>
+  );
 };
 
 // Wrap App with ThemeProvider
