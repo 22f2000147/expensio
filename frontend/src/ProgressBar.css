@@ -7,6 +7,7 @@
   width: 100%;
   overflow: visible;
   z-index: 15;
+  isolation: isolate;
 }
 
 /* Progress Bar Background */
@@ -47,89 +48,55 @@
   }
 }
 
-/* Emoji Icon */
-.progress-emoji {
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  font-size: 20px;
-  z-index: 30;
-  transition: all 0.3s ease;
-  pointer-events: none;
-}
-
-/* Pulsing animation for partial progress */
-.emoji-pulse {
-  animation: gentlePulse 2s ease-in-out infinite;
-}
-
-@keyframes gentlePulse {
-  0%, 100% {
-    transform: translateY(-50%) scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translateY(-50%) scale(1.1);
-    opacity: 1;
-  }
-}
-
-/* Glowing animation for 100% completion */
-.emoji-glow {
-  animation: brightGlow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes brightGlow {
-  0% {
-    transform: translateY(-50%) scale(1);
-    filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
-  }
-  100% {
-    transform: translateY(-50%) scale(1.2);
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
-  }
-}
+/* Removed emoji styling as emojis are no longer used */
 
 /* Confetti Container */
 .confetti-container {
   position: absolute;
-  top: -80px;
-  left: -150px;
-  right: -150px;
-  bottom: 50px;
+  top: -150px;
+  left: -250px;
+  right: -250px;
+  bottom: 150px;
   pointer-events: none;
-  z-index: 5;
-  overflow: hidden;
+  z-index: 50;
+  overflow: visible;
+  background: transparent;
 }
 
 /* Confetti Particles */
 .confetti-particle {
   position: absolute;
-  top: -20px;
-  width: 8px;
-  height: 8px;
-  animation: confettiFall 3s ease-in-out forwards;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  animation: confettiFall 4s ease-in-out forwards;
   animation-delay: var(--delay);
   transform: rotate(var(--rotation));
-  border-radius: 2px;
+  border-radius: 50%;
+  z-index: 60;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes confettiFall {
   0% {
-    transform: translateY(-20px) translateX(0) rotate(0deg);
+    transform: translateY(0px) translateX(0px) rotate(0deg);
     opacity: 1;
   }
-  20% {
-    transform: translateY(30px) translateX(var(--x-offset)) rotate(45deg);
+  25% {
+    transform: translateY(80px) translateX(var(--x-offset)) rotate(90deg);
     opacity: 1;
   }
-  60% {
-    transform: translateY(120px) translateX(var(--x-offset)) rotate(180deg);
+  50% {
+    transform: translateY(160px) translateX(var(--x-offset)) rotate(180deg);
     opacity: 1;
+  }
+  75% {
+    transform: translateY(240px) translateX(var(--x-offset)) rotate(270deg);
+    opacity: 0.8;
   }
   100% {
-    transform: translateY(220px) translateX(var(--x-offset)) rotate(360deg);
+    transform: translateY(320px) translateX(var(--x-offset)) rotate(360deg);
     opacity: 0;
   }
 }
