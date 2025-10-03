@@ -396,9 +396,9 @@ body {
 }
 
 .todo-item.completed .todo-title {
-  text-decoration: line-through;
-  color: var(--text-secondary);
-}
+   text-decoration: line-through;
+   color: var(--text-secondary);
+ }
 
 .todo-content {
   display: flex;
@@ -517,7 +517,230 @@ body {
   box-shadow: 0 2px 8px var(--shadow-medium);
 }
 
-/* Additional TodoItem button styles */
+/* Enhanced Edit Modal Styles */
+.edit-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+.edit-modal {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideInUp 0.3s ease;
+  border: 1px solid var(--border-secondary);
+}
+
+.edit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
+}
+
+.edit-modal-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+  line-height: 1;
+}
+
+.edit-modal-close:hover {
+  background: var(--bg-button-danger);
+  color: var(--text-inverse);
+  transform: scale(1.1);
+}
+
+.edit-modal-body {
+  padding: 24px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.edit-form-group {
+  margin-bottom: 20px;
+}
+
+.edit-form-group:last-child {
+  margin-bottom: 0;
+}
+
+.edit-form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.edit-modal-input,
+.edit-modal-select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--border-primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all var(--transition-medium);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.edit-modal-input:focus,
+.edit-modal-select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--shadow-focus);
+  background: var(--bg-secondary);
+}
+
+.edit-modal-input::placeholder {
+  color: var(--text-muted);
+}
+
+.edit-modal-select {
+  cursor: pointer;
+}
+
+.edit-modal-date {
+  cursor: text;
+}
+
+.edit-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
+}
+
+.edit-modal-cancel {
+  padding: 12px 24px;
+  background: var(--border-primary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.edit-modal-save {
+  padding: 12px 24px;
+  background: var(--bg-button-primary);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px var(--shadow-button);
+}
+
+.edit-modal-cancel:hover {
+  background: var(--text-secondary);
+  color: var(--text-inverse);
+  transform: translateY(-1px);
+}
+
+.edit-modal-save:hover {
+  background: var(--bg-button-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow-button-hover);
+}
+
+.edit-modal-save:active {
+  transform: translateY(0);
+}
+
+/* Enhanced Edit Button */
+.emoji-button {
+  padding: 8px 12px;
+  background: transparent !important;
+  color: var(--text-primary);
+  border: none;
+  border-radius: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-button:hover {
+  transform: translateY(-2px);
+  background: transparent !important;
+}
+
+.emoji-button:active {
+  transform: translateY(0);
+}
+
+/* Specific emoji colors */
+.edit-button {
+  color: #4a90e2;
+}
+
+.toggle-button.complete {
+  color: #27ae60 !important;
+  font-weight: 600;
+}
+
+.toggle-button.undo {
+  color: #e67e22;
+}
+
+.delete-button {
+  color: #e74c3c;
+}
+
+.edit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px var(--shadow-button-hover);
+}
+
+.edit-button:active {
+  transform: translateY(0);
+}
+
+/* Legacy styles for backward compatibility */
 .save-button {
   padding: 8px 16px;
   background: var(--bg-button-success);
@@ -560,6 +783,27 @@ body {
   outline: none;
   border-color: var(--border-focus);
   box-shadow: 0 0 0 2px var(--shadow-focus);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .category-display {
@@ -694,6 +938,48 @@ body {
 
   .todo-content {
     text-align: center;
+  }
+
+  /* Mobile Edit Modal Styles */
+  .edit-modal {
+    width: 95%;
+    margin: 10px;
+    max-height: 95vh;
+  }
+
+  .edit-modal-header {
+    padding: 16px 20px;
+  }
+
+  .edit-modal-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .edit-modal-body {
+    padding: 20px;
+  }
+
+  .edit-modal-footer {
+    padding: 16px 20px;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .edit-modal-cancel,
+  .edit-modal-save {
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  .emoji-button {
+    padding: 6px 10px;
+    min-width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .emoji-button:hover {
+    background: transparent !important;
   }
 }
 
