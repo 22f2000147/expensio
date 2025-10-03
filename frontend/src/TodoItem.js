@@ -110,40 +110,68 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
       <div className="todo-content">
         {isEditing ? (
           <>
-            <div className="edit-form-inline">
-              <input
-                type="text"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="title-edit-input"
-                placeholder="Todo title..."
-                autoFocus
-              />
-              <input
-                type="text"
-                value={editCategory}
-                onChange={(e) => setEditCategory(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="category-edit-input"
-                placeholder="Category..."
-              />
-              <select
-                value={editPriority}
-                onChange={(e) => setEditPriority(e.target.value)}
-                className="priority-edit-select"
-              >
-                <option value="Low">🔵 Low</option>
-                <option value="Medium">🟡 Medium</option>
-                <option value="High">🔴 High</option>
-              </select>
-              <input
-                type="date"
-                value={editDueDate}
-                onChange={(e) => setEditDueDate(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="date-edit-input"
-              />
+            <div className="edit-modal-overlay" onClick={handleCancel}>
+              <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
+                <div className="edit-modal-header">
+                  <h3>✏️ Edit Todo</h3>
+                  <button onClick={handleCancel} className="edit-modal-close" title="Cancel editing">×</button>
+                </div>
+                <div className="edit-modal-body">
+                  <div className="edit-form-group">
+                    <label className="edit-form-label">Title</label>
+                    <input
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      className="edit-modal-input"
+                      placeholder="Enter todo title..."
+                      autoFocus
+                    />
+                  </div>
+                  <div className="edit-form-group">
+                    <label className="edit-form-label">Category</label>
+                    <input
+                      type="text"
+                      value={editCategory}
+                      onChange={(e) => setEditCategory(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      className="edit-modal-input"
+                      placeholder="Enter category..."
+                    />
+                  </div>
+                  <div className="edit-form-group">
+                    <label className="edit-form-label">Priority</label>
+                    <select
+                      value={editPriority}
+                      onChange={(e) => setEditPriority(e.target.value)}
+                      className="edit-modal-select"
+                    >
+                      <option value="Low">🔵 Low</option>
+                      <option value="Medium">🟡 Medium</option>
+                      <option value="High">🔴 High</option>
+                    </select>
+                  </div>
+                  <div className="edit-form-group">
+                    <label className="edit-form-label">Due Date (Optional)</label>
+                    <input
+                      type="date"
+                      value={editDueDate}
+                      onChange={(e) => setEditDueDate(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      className="edit-modal-input edit-modal-date"
+                    />
+                  </div>
+                </div>
+                <div className="edit-modal-footer">
+                  <button onClick={handleCancel} className="edit-modal-cancel" title="Cancel editing">
+                    Cancel
+                  </button>
+                  <button onClick={handleSave} className="edit-modal-save" title="Save changes">
+                    Save Changes
+                  </button>
+                </div>
+              </div>
             </div>
           </>
         ) : (
