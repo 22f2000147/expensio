@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+import ThemeToggle from './ThemeToggle';
+import { ThemeProvider } from './ThemeContext';
 import './App.css';
 
+// App component wrapped with ThemeProvider
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -99,6 +102,13 @@ const App = () => {
     return ['All', ...new Set(categories)];
   };
 
+  // Get unique priorities for filter dropdown
+  const getUniquePriorities = () => {
+    const priorities = todos.map(todo => todo.priority).filter(Boolean);
+    const uniquePriorities = [...new Set(priorities)];
+    return ['All', ...uniquePriorities.sort()];
+  };
+
   // Clear all filters
   const clearFilters = () => {
     setSearchTerm('');
@@ -114,6 +124,9 @@ const App = () => {
       <header className="app-header">
         <h1>TODO List App</h1>
         <p>A simple todo application built with React and Node.js</p>
+        <div style={{ marginTop: '15px' }}>
+          <ThemeToggle />
+        </div>
       </header>
 
       <div className="search-filter-container">
@@ -150,9 +163,11 @@ const App = () => {
               className="priority-filter"
             >
               <option value="">All Priorities</option>
-              <option value="High">🔴 High</option>
-              <option value="Medium">🟡 Medium</option>
-              <option value="Low">🔵 Low</option>
+              {getUniquePriorities().map(priority => (
+                <option key={priority} value={priority === 'All' ? '' : priority}>
+                  {priority === 'High' ? '🔴' : priority === 'Medium' ? '🟡' : priority === 'Low' ? '🔵' : ''} {priority}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -217,4 +232,11 @@ const App = () => {
   );
 };
 
-export default App;
+// Wrap App with ThemeProvider
+const AppWithTheme = () => (
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>
+);
+
+export default AppWithTheme;
