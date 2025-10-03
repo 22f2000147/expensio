@@ -1,4 +1,4 @@
-/* CSS Custom Properties for Theme Variables */
+/ CSS Custom Properties for Theme Variables */
 :root {
   /* Light theme colors */
   --bg-primary: #f5f5f5;
@@ -305,13 +305,16 @@ body {
 .todo-input,
 .priority-select {
   width: 100%;
-  padding: 12px 16px;
+  padding: 14px 16px;
   border: 2px solid var(--border-primary);
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color var(--transition-medium);
+  transition: border-color var(--transition-medium), box-shadow var(--transition-medium), background-color var(--transition-medium);
   background: var(--bg-tertiary);
   color: var(--text-primary);
+  cursor: pointer;
+  box-sizing: border-box;
+  min-height: 48px;
 }
 
 .todo-input:focus,
@@ -319,6 +322,16 @@ body {
   outline: none;
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px var(--shadow-focus);
+}
+
+.priority-select {
+  overflow: visible;
+}
+
+.priority-select option {
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .todo-input::placeholder {
@@ -396,8 +409,18 @@ body {
 }
 
 .todo-item.completed .todo-title {
-  text-decoration: line-through;
-  color: var(--text-secondary);
+   text-decoration: line-through;
+   color: var(--text-secondary);
+}
+
+.todo-item.completed .todo-actions .edit-button {
+  display: none;
+}
+
+.todo-item.completed .todo-actions .toggle-button.undo {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  color: var(--text-inverse);
+  font-weight: 600;
 }
 
 .todo-content {
@@ -520,60 +543,67 @@ body {
 /* Enhanced Edit Form Styles */
 .edit-form {
   background: var(--bg-secondary);
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 24px;
   margin: 15px 0;
   border: 2px solid var(--border-secondary);
   transition: all var(--transition-medium);
   animation: editFormSlideIn 0.3s ease-out;
   width: 100%;
   position: relative;
+  box-shadow: 0 4px 12px var(--shadow-light);
 }
 
 .edit-form .form-row {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .edit-form .form-row .form-group {
   flex: 1;
-  min-width: 200px;
+  min-width: 220px;
   display: block;
   visibility: visible;
+  position: relative;
 }
 
-.edit-form .form-row .form-group:last-child {
-  flex: 0 0 auto;
-  min-width: 100px;
+.edit-form .form-row .form-group {
+  flex: 1;
+  min-width: 220px;
 }
 
 .edit-form .form-row .todo-input,
 .edit-form .form-row .priority-select {
   width: 100%;
-  min-height: 44px;
+  min-height: 48px;
+  padding: 14px 16px;
   display: block;
   visibility: visible;
+  box-sizing: border-box;
 }
 
 .edit-form .due-date-row {
-  margin-top: 15px;
-  gap: 12px;
+  margin-top: 20px;
+  gap: 16px;
   align-items: center;
   width: 100%;
 }
 
 .edit-form .due-date-row .form-group {
   flex: 1;
+  min-width: 220px;
   display: block;
   visibility: visible;
 }
 
 .edit-form .due-date-row .cancel-button {
   flex: 0 0 auto;
-  min-width: 100px;
+  min-width: 120px;
+  padding: 14px 20px;
 }
 
 .edit-form .form-row {

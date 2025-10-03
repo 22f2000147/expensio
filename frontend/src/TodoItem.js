@@ -8,6 +8,11 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
   const [editPriority, setEditPriority] = useState(todo.priority || 'Medium');
   const [editDueDate, setEditDueDate] = useState(todo.due_date || '');
   const handleToggleComplete = async () => {
+    // If currently editing, cancel the edit session first
+    if (isEditing) {
+      handleCancel();
+    }
+
     try {
       const response = await axios.put(`http://localhost:5000/api/todos/${todo.id}`, {
         completed: !todo.completed
@@ -144,12 +149,6 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
                     <option value="High">🔴 High</option>
                   </select>
                 </div>
-                <button
-                  onClick={handleSave}
-                  className="add-button"
-                >
-                  Save
-                </button>
               </div>
               <div className="due-date-row">
                 <div className="form-group">
@@ -162,9 +161,6 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
                     placeholder="Due date (optional)"
                   />
                 </div>
-                <button onClick={handleCancel} className="cancel-button">
-                  Cancel
-                </button>
               </div>
             </div>
           </>
@@ -209,12 +205,15 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
           </>
         ) : (
           <>
-            <button onClick={handleEdit} className="edit-button">
-              Edit
-            </button>
+            {!todo.completed && (
+              <button onClick={handleEdit} className="edit-button">
+                Edit
+              </button>
+            )}
             <button
               onClick={handleToggleComplete}
               className={`toggle-button ${todo.completed ? 'undo' : 'complete'}`}
+              title={todo.completed ? 'Mark as incomplete' : 'Mark as completed'}
             >
               {todo.completed ? 'Undo' : 'Complete'}
             </button>
