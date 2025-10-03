@@ -7,8 +7,8 @@ const TodoForm = ({ onTodoAdded }) => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('General');
   const [priority, setPriority] = useState('Medium');
-  const [dueDateOption, setDueDateOption] = useState('None');
-  const [customDueDate, setCustomDueDate] = useState(null);
+  const [hasDueDate, setHasDueDate] = useState(false);
+  const [dueDate, setDueDate] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -21,31 +21,19 @@ const TodoForm = ({ onTodoAdded }) => {
     setLoading(true);
 
     try {
-      // Calculate the due date based on the selected option
-      let dueDate = null;
-      if (dueDateOption === 'Today') {
-        dueDate = new Date().toISOString().split('T')[0];
-      } else if (dueDateOption === 'Tomorrow') {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        dueDate = tomorrow.toISOString().split('T')[0];
-      } else if (dueDateOption === 'Custom' && customDueDate) {
-        dueDate = customDueDate.toISOString().split('T')[0];
-      }
-
       const response = await axios.post('http://localhost:5000/api/todos', {
         title: title.trim(),
         category: category.trim(),
         priority: priority,
-        dueDate: dueDate
+        dueDate: hasDueDate && dueDate ? dueDate.toISOString().split('T')[0] : null
       });
 
       onTodoAdded(response.data);
       setTitle('');
       setCategory('General');
       setPriority('Medium');
-      setDueDateOption('None');
-      setCustomDueDate(null);
+      setHasDueDate(false);
+      setDueDate(null);
     } catch (error) {
       console.error('Error adding todo:', error);
       alert('Failed to add todo. Please make sure the backend is running.');
@@ -90,24 +78,23 @@ const TodoForm = ({ onTodoAdded }) => {
             <option value="High">🔴 High</option>
           </select>
         </div>
-        <div className="form-group">
-          <select
-            value={dueDateOption}
-            onChange={(e) => setDueDateOption(e.target.value)}
-            className="priority-select"
-            disabled={loading}
-          >
-            <option value="None">No Due Date</option>
-            <option value="Today">Today</option>
-            <option value="Tomorrow">Tomorrow</option>
-            <option value="Custom">Custom Date</option>
-          </select>
+        <div className="form-group checkbox-group">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={hasDueDate}
+              onChange={(e) => setHasDueDate(e.target.checked)}
+              disabled={loading}
+              className="due-date-checkbox"
+            />
+            Set due date
+          </label>
         </div>
-        {dueDateOption === 'Custom' && (
+        {hasDueDate && (
           <div className="form-group">
             <DatePicker
-              selected={customDueDate}
-              onChange={(date) => setCustomDueDate(date)}
+              selected={dueDate}
+              onChange={(date) => setDueDate(date)}
               dateFormat="yyyy-MM-dd"
               placeholderText="Select due date"
               minDate={new Date()}

@@ -651,6 +651,15 @@ body {
     flex: none;
   }
 
+  .form-group:has(.checkbox-group) {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .checkbox-label {
+    justify-content: center;
+  }
+
   .todo-actions {
     flex-direction: column;
     gap: 8px;
@@ -679,13 +688,42 @@ body {
   color: var(--text-primary);
 }
 
-/* Ensure consistent form group heights for better alignment */
+/* Checkbox styling for due date toggle */
+.checkbox-group {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.due-date-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--accent-purple);
+}
+
+/* Form group layout adjustments */
 .form-group:has(.priority-select) {
   flex: 1 1 200px;
 }
 
 .form-group:has(.date-picker) {
   flex: 1 1 200px;
+}
+
+.form-group:has(.checkbox-group) {
+  flex: 0 0 auto;
+  margin-right: 15px;
 }
 
 .date-picker:focus {

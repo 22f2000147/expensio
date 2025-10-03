@@ -44,11 +44,12 @@ describe('TodoForm with Due Date', () => {
     jest.clearAllMocks();
   });
 
-  test('renders due date select dropdown', () => {
+  test('renders due date checkbox', () => {
     render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
 
-    const dueDateSelect = screen.getByDisplayValue('No Due Date');
-    expect(dueDateSelect).toBeInTheDocument();
+    const checkbox = screen.getByLabelText('Set due date');
+    expect(checkbox).toBeInTheDocument();
+    expect(checkbox).not.toBeChecked();
   });
 
   test('does not render date picker by default', () => {
@@ -58,18 +59,23 @@ describe('TodoForm with Due Date', () => {
     expect(datePicker).not.toBeInTheDocument();
   });
 
-  test('renders date picker when Custom is selected', () => {
+  test('renders date picker when checkbox is checked', () => {
     render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
 
-    const dueDateSelect = screen.getByDisplayValue('No Due Date');
-    fireEvent.change(dueDateSelect, { target: { value: 'Custom' } });
+    const checkbox = screen.getByLabelText('Set due date');
+    fireEvent.click(checkbox);
 
     const datePicker = screen.getByTestId('date-picker');
     expect(datePicker).toBeInTheDocument();
+    expect(checkbox).toBeChecked();
   });
 
-  test('allows selecting a due date', async () => {
+  test('allows selecting a due date when checkbox is checked', async () => {
     render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
+
+    // First check the checkbox
+    const checkbox = screen.getByLabelText('Set due date');
+    fireEvent.click(checkbox);
 
     const datePicker = screen.getByTestId('date-picker');
     const futureDate = '2025-12-31';
@@ -79,51 +85,10 @@ describe('TodoForm with Due Date', () => {
     expect(datePicker.value).toBe(futureDate);
   });
 
-  test('submits form with Today due date', async () => {
+  test('submits form with due date when checkbox is checked', async () => {
     const mockTodo = {
-      id: 1,
-      title: 'Test Todo Today',
-      category: 'Work',
-      priority: 'High',
-      due_date: '2024-01-15',
-      completed: false,
-      is_overdue: false
-    };
-
-    mockedAxios.post.mockResolvedValueOnce({ data: mockTodo });
-
-    render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
-
-    // Fill in the form
-    const titleInput = screen.getByPlaceholderText('Enter todo title...');
-    const categoryInput = screen.getByPlaceholderText('Enter category (e.g., Work, Personal, Shopping)...');
-    const prioritySelect = screen.getByDisplayValue('🟡 Medium');
-    const dueDateSelect = screen.getByDisplayValue('No Due Date');
-    const submitButton = screen.getByText('Add Todo');
-
-    fireEvent.change(titleInput, { target: { value: 'Test Todo Today' } });
-    fireEvent.change(categoryInput, { target: { value: 'Work' } });
-    fireEvent.change(prioritySelect, { target: { value: 'High' } });
-    fireEvent.change(dueDateSelect, { target: { value: 'Today' } });
-
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:5000/api/todos', {
-        title: 'Test Todo Today',
-        category: 'Work',
-        priority: 'High',
-        dueDate: '2024-01-15'
-      });
-    });
-
-    expect(mockOnTodoAdded).toHaveBeenCalledWith(mockTodo);
-  });
-
-  test('submits form with Custom due date', async () => {
-    const mockTodo = {
-      id: 2,
-      title: 'Test Todo Custom',
+      id: 6,
+      title: 'Test Todo with Due Date',
       category: 'Work',
       priority: 'High',
       due_date: '2025-12-31',
@@ -139,21 +104,21 @@ describe('TodoForm with Due Date', () => {
     const titleInput = screen.getByPlaceholderText('Enter todo title...');
     const categoryInput = screen.getByPlaceholderText('Enter category (e.g., Work, Personal, Shopping)...');
     const prioritySelect = screen.getByDisplayValue('🟡 Medium');
-    const dueDateSelect = screen.getByDisplayValue('No Due Date');
+    const checkbox = screen.getByLabelText('Set due date');
     const datePicker = screen.getByTestId('date-picker');
     const submitButton = screen.getByText('Add Todo');
 
-    fireEvent.change(titleInput, { target: { value: 'Test Todo Custom' } });
+    fireEvent.change(titleInput, { target: { value: 'Test Todo with Due Date' } });
     fireEvent.change(categoryInput, { target: { value: 'Work' } });
     fireEvent.change(prioritySelect, { target: { value: 'High' } });
-    fireEvent.change(dueDateSelect, { target: { value: 'Custom' } });
+    fireEvent.click(checkbox);
     fireEvent.change(datePicker, { target: { value: '2025-12-31' } });
 
     fireEvent.click(submitButton);
 
     await waitFor(() => {
       expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:5000/api/todos', {
-        title: 'Test Todo Custom',
+        title: 'Test Todo with Due Date',
         category: 'Work',
         priority: 'High',
         dueDate: '2025-12-31'
@@ -163,10 +128,10 @@ describe('TodoForm with Due Date', () => {
     expect(mockOnTodoAdded).toHaveBeenCalledWith(mockTodo);
   });
 
-  test('submits form without due date (None selected)', async () => {
+  test('submits form without due date when checkbox is unchecked', async () => {
     const mockTodo = {
-      id: 4,
-      title: 'Test Todo No Due Date',
+      id: 7,
+      title: 'Test Todo without Due Date',
       category: 'Personal',
       priority: 'Low',
       due_date: null,
@@ -178,28 +143,70 @@ describe('TodoForm with Due Date', () => {
 
     render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
 
-    // Fill in the form with None selected for due date
+    // Fill in the form
     const titleInput = screen.getByPlaceholderText('Enter todo title...');
     const categoryInput = screen.getByPlaceholderText('Enter category (e.g., Work, Personal, Shopping)...');
     const prioritySelect = screen.getByDisplayValue('🟡 Medium');
-    const dueDateSelect = screen.getByDisplayValue('No Due Date');
+    const checkbox = screen.getByLabelText('Set due date');
     const submitButton = screen.getByText('Add Todo');
 
-    fireEvent.change(titleInput, { target: { value: 'Test Todo No Due Date' } });
+    fireEvent.change(titleInput, { target: { value: 'Test Todo without Due Date' } });
     fireEvent.change(categoryInput, { target: { value: 'Personal' } });
     fireEvent.change(prioritySelect, { target: { value: 'Low' } });
-    // dueDateSelect is already set to 'None' by default
+    // Checkbox remains unchecked
 
     fireEvent.click(submitButton);
 
     await waitFor(() => {
       expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:5000/api/todos', {
-        title: 'Test Todo No Due Date',
+        title: 'Test Todo without Due Date',
         category: 'Personal',
         priority: 'Low',
         dueDate: null
       });
     });
+
+    expect(mockOnTodoAdded).toHaveBeenCalledWith(mockTodo);
+  });
+
+  test('unchecks checkbox when form is reset', async () => {
+    const mockTodo = {
+      id: 8,
+      title: 'Reset Test Todo',
+      category: 'General',
+      priority: 'Medium',
+      due_date: null,
+      completed: false,
+      is_overdue: false
+    };
+
+    mockedAxios.post.mockResolvedValueOnce({ data: mockTodo });
+
+    render(<TodoForm onTodoAdded={mockOnTodoAdded} />);
+
+    const titleInput = screen.getByPlaceholderText('Enter todo title...');
+    const categoryInput = screen.getByPlaceholderText('Enter category (e.g., Work, Personal, Shopping)...');
+    const prioritySelect = screen.getByDisplayValue('🟡 Medium');
+    const checkbox = screen.getByLabelText('Set due date');
+    const submitButton = screen.getByText('Add Todo');
+
+    // Fill and submit form
+    fireEvent.change(titleInput, { target: { value: 'Reset Test Todo' } });
+    fireEvent.change(categoryInput, { target: { value: 'Work' } });
+    fireEvent.change(prioritySelect, { target: { value: 'High' } });
+    fireEvent.click(checkbox);
+
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockOnTodoAdded).toHaveBeenCalledWith(mockTodo);
+    });
+
+    // Check that form is reset
+    expect(titleInput.value).toBe('');
+    expect(categoryInput.value).toBe('General');
+    expect(prioritySelect.value).toBe('Medium');
+    expect(checkbox.checked).toBe(false);
   });
 
   test('resets form after successful submission', async () => {
