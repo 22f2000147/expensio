@@ -111,39 +111,54 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
         {isEditing ? (
           <>
             <div className="edit-form">
-              <input
-                type="text"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="title-edit-input"
-                placeholder="Todo title..."
-                autoFocus
-              />
-              <input
-                type="text"
-                value={editCategory}
-                onChange={(e) => setEditCategory(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="category-edit-input"
-                placeholder="Category..."
-              />
-              <select
-                value={editPriority}
-                onChange={(e) => setEditPriority(e.target.value)}
-                className="priority-edit-select"
-              >
-                <option value="Low">🔵 Low</option>
-                <option value="Medium">🟡 Medium</option>
-                <option value="High">🔴 High</option>
-              </select>
-              <input
-                type="date"
-                value={editDueDate}
-                onChange={(e) => setEditDueDate(e.target.value)}
-                onKeyDown={handleKeyPress}
-                className="date-edit-input"
-              />
+              <div className="edit-instructions">
+                <p>✨ Edit your todo below. Press Enter to save or Escape to cancel.</p>
+              </div>
+              <div className="edit-form-row">
+                <div className="edit-form-group">
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    className="edit-input title-edit-input"
+                    placeholder="Todo title..."
+                    autoFocus
+                  />
+                </div>
+                <div className="edit-form-group">
+                  <input
+                    type="text"
+                    value={editCategory}
+                    onChange={(e) => setEditCategory(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    className="edit-input category-edit-input"
+                    placeholder="Category..."
+                  />
+                </div>
+              </div>
+              <div className="edit-form-row">
+                <div className="edit-form-group">
+                  <select
+                    value={editPriority}
+                    onChange={(e) => setEditPriority(e.target.value)}
+                    className="edit-input priority-edit-select"
+                  >
+                    <option value="Low">🔵 Low</option>
+                    <option value="Medium">🟡 Medium</option>
+                    <option value="High">🔴 High</option>
+                  </select>
+                </div>
+                <div className="edit-form-group">
+                  <input
+                    type="date"
+                    value={editDueDate}
+                    onChange={(e) => setEditDueDate(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                    className="edit-input date-edit-input"
+                  />
+                </div>
+              </div>
             </div>
           </>
         ) : (
@@ -187,8 +202,8 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
           </>
         ) : (
           <>
-            <button onClick={handleEdit} className="edit-button">
-              Edit
+            <button onClick={handleEdit} className="edit-button" title="Edit todo">
+              ✏️
             </button>
             <button
               onClick={handleToggleComplete}
