@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const TodoForm = ({ onTodoAdded }) => {
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('General');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -16,11 +17,13 @@ const TodoForm = ({ onTodoAdded }) => {
 
     try {
       const response = await axios.post('http://localhost:5000/api/todos', {
-        title: title.trim()
+        title: title.trim(),
+        category: category.trim()
       });
 
       onTodoAdded(response.data);
       setTitle('');
+      setCategory('General');
     } catch (error) {
       console.error('Error adding todo:', error);
       alert('Failed to add todo. Please make sure the backend is running.');
@@ -39,6 +42,16 @@ const TodoForm = ({ onTodoAdded }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter todo title..."
+            className="todo-input"
+            disabled={loading}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            placeholder="Enter category (e.g., Work, Personal, Shopping)..."
             className="todo-input"
             disabled={loading}
           />

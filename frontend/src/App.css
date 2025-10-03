@@ -43,6 +43,70 @@ body {
   opacity: 0.9;
 }
 
+/* Search and Filter Section */
+.search-filter-container {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-filter {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-group,
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-input,
+.category-filter {
+  width: 100%;
+  padding: 15px 18px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: #fafafa;
+}
+
+.search-input:focus,
+.category-filter:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: white;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.clear-filters-button {
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.clear-filters-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(238, 90, 82, 0.3);
+}
+
 /* Main Content */
 .app-main {
   background: white;
@@ -256,6 +320,27 @@ body {
 
   .app-header h1 {
     font-size: 2rem;
+  }
+
+  .search-filter {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .search-group,
+  .filter-group {
+    min-width: unset;
+  }
+
+  .search-input,
+  .category-filter {
+    padding: 12px 15px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .clear-filters-button {
+    padding: 12px 18px;
+    font-size: 0.9rem;
   }
 
   .todo-form {
