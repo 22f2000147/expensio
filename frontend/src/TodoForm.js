@@ -7,7 +7,8 @@ const TodoForm = ({ onTodoAdded }) => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('General');
   const [priority, setPriority] = useState('Medium');
-  const [dueDate, setDueDate] = useState(null);
+  const [dueDateOption, setDueDateOption] = useState('None');
+  const [customDueDate, setCustomDueDate] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -20,18 +21,31 @@ const TodoForm = ({ onTodoAdded }) => {
     setLoading(true);
 
     try {
+      // Calculate the due date based on the selected option
+      let dueDate = null;
+      if (dueDateOption === 'Today') {
+        dueDate = new Date().toISOString().split('T')[0];
+      } else if (dueDateOption === 'Tomorrow') {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dueDate = tomorrow.toISOString().split('T')[0];
+      } else if (dueDateOption === 'Custom' && customDueDate) {
+        dueDate = customDueDate.toISOString().split('T')[0];
+      }
+
       const response = await axios.post('http://localhost:5000/api/todos', {
         title: title.trim(),
         category: category.trim(),
         priority: priority,
-        dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null
+        dueDate: dueDate
       });
 
       onTodoAdded(response.data);
       setTitle('');
       setCategory('General');
       setPriority('Medium');
-      setDueDate(null);
+      setDueDateOption('None');
+      setCustomDueDate(null);
     } catch (error) {
       console.error('Error adding todo:', error);
       alert('Failed to add todo. Please make sure the backend is running.');
@@ -77,17 +91,31 @@ const TodoForm = ({ onTodoAdded }) => {
           </select>
         </div>
         <div className="form-group">
-          <label className="form-label">Due Date (Optional)</label>
-          <DatePicker
-            selected={dueDate}
-            onChange={(date) => setDueDate(date)}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="Select due date"
-            minDate={new Date()}
-            className="date-picker"
+          <select
+            value={dueDateOption}
+            onChange={(e) => setDueDateOption(e.target.value)}
+            className="priority-select"
             disabled={loading}
-          />
+          >
+            <option value="None">No Due Date</option>
+            <option value="Today">Today</option>
+            <option value="Tomorrow">Tomorrow</option>
+            <option value="Custom">Custom Date</option>
+          </select>
         </div>
+        {dueDateOption === 'Custom' && (
+          <div className="form-group">
+            <DatePicker
+              selected={customDueDate}
+              onChange={(date) => setCustomDueDate(date)}
+              dateFormat="yyyy-MM-dd"
+              placeholderText="Select due date"
+              minDate={new Date()}
+              className="date-picker"
+              disabled={loading}
+            />
+          </div>
+        )}
         <button
           type="submit"
           className="add-button"

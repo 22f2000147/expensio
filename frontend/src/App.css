@@ -278,6 +278,7 @@ body {
   display: flex;
   gap: 15px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .form-group {
@@ -645,6 +646,11 @@ body {
     align-items: stretch;
   }
 
+  .form-group:has(.priority-select),
+  .form-group:has(.date-picker) {
+    flex: none;
+  }
+
   .todo-actions {
     flex-direction: column;
     gap: 8px;
@@ -663,14 +669,23 @@ body {
 
 /* Date Picker Styles */
 .date-picker {
- width: 100%;
- padding: 12px 16px;
- border: 2px solid var(--border-primary);
- border-radius: 8px;
- font-size: 1rem;
- transition: border-color var(--transition-medium), box-shadow var(--transition-medium), background-color var(--transition-medium);
- background: var(--bg-tertiary);
- color: var(--text-primary);
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color var(--transition-medium), box-shadow var(--transition-medium), background-color var(--transition-medium);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Ensure consistent form group heights for better alignment */
+.form-group:has(.priority-select) {
+  flex: 1 1 200px;
+}
+
+.form-group:has(.date-picker) {
+  flex: 1 1 200px;
 }
 
 .date-picker:focus {
