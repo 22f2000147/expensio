@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './ProgressBar.css';
 
 const ProgressBar = ({ todos }) => {
-  console.log('ProgressBar component rendering with todos:', todos);
   const [showConfetti, setShowConfetti] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -16,12 +15,6 @@ const ProgressBar = ({ todos }) => {
   // Update progress when todos change
   useEffect(() => {
     const newProgress = calculateProgress();
-    console.log('ProgressBar Debug:', {
-      todosCount: todos.length,
-      completedCount: todos.filter(todo => todo.completed).length,
-      newProgress,
-      todos
-    });
     setProgress(newProgress);
 
     // Trigger confetti animation when reaching 100%
@@ -62,25 +55,24 @@ const ProgressBar = ({ todos }) => {
 
   return (
     <>
-      {/* Debug: Always show progress bar for testing */}
-      <div className="progress-bar-container" role="progressbar" aria-label={`Task completion progress: ${progress}% complete`} aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} style={{ backgroundColor: 'red', opacity: 0.8 }}>
-        <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <div className={`progress-emoji ${getEmojiClass()}`}>
-          {progress === 100 ? '🎉' : progress > 0 ? '🎉' : ''}
-        </div>
-      </div>
-      {showConfetti && (
-        <div className="confetti-container">
-          {renderConfetti()}
-        </div>
-      )}
-    </>
-  );
+       <div className="progress-bar-container" role="progressbar" aria-label={`Task completion progress: ${progress}% complete`} aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+         <div className="progress-bar">
+           <div
+             className="progress-fill"
+             style={{ width: `${progress}%` }}
+           />
+         </div>
+         <div className={`progress-emoji ${getEmojiClass()}`}>
+           {progress === 100 ? '🎉' : progress > 0 ? '🎉' : ''}
+         </div>
+       </div>
+       {showConfetti && (
+         <div className="confetti-container">
+           {renderConfetti()}
+         </div>
+       )}
+     </>
+   );
 };
 
 export default ProgressBar;

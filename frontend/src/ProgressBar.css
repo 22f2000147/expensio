@@ -1,8 +1,11 @@
 /* Progress Bar Container */
 .progress-bar-container {
+  position: relative;
+  display: block;
   margin: 20px 0 15px 0;
   height: 8px;
   width: 100%;
+  overflow: visible;
 }
 
 /* Progress Bar Background */
@@ -45,11 +48,12 @@
 .progress-emoji {
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 15px;
   transform: translateY(-50%);
-  font-size: 16px;
+  font-size: 20px;
   z-index: 1001;
   transition: all 0.3s ease;
+  pointer-events: none;
 }
 
 /* Pulsing animation for partial progress */
@@ -86,13 +90,13 @@
 
 /* Confetti Container */
 .confetti-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  right: -100px;
+  bottom: 100px;
   pointer-events: none;
-  z-index: 999;
+  z-index: 10;
   overflow: hidden;
 }
 
@@ -114,15 +118,15 @@
     opacity: 1;
   }
   10% {
-    transform: translateY(10vh) translateX(var(--x-offset)) rotate(45deg);
+    transform: translateY(20px) translateX(var(--x-offset)) rotate(45deg);
     opacity: 1;
   }
   50% {
-    transform: translateY(50vh) translateX(var(--x-offset)) rotate(180deg);
+    transform: translateY(100px) translateX(var(--x-offset)) rotate(180deg);
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh) translateX(var(--x-offset)) rotate(360deg);
+    transform: translateY(200px) translateX(var(--x-offset)) rotate(360deg);
     opacity: 0;
   }
 }
