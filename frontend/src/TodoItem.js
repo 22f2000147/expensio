@@ -4,8 +4,7 @@ import axios from 'axios';
 const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(todo.title);
-  const [editCategoryOption, setEditCategoryOption] = useState(todo.category || 'General');
-  const [editCustomCategory, setEditCustomCategory] = useState('');
+  const [editCategory, setEditCategory] = useState(todo.category || '📋 General');
   const [editPriority, setEditPriority] = useState(todo.priority || 'Medium');
   const [editDueDate, setEditDueDate] = useState(todo.due_date || '');
 
@@ -20,14 +19,8 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
     '📚 Education',
     '✈️ Travel',
     '🏠 Home',
-    '🚨 Urgent',
-    '📝 Custom'
+    '🚨 Urgent'
   ];
-
-  // Get the actual category value for editing
-  const getEditCategoryValue = () => {
-    return editCategoryOption === 'Custom' ? editCustomCategory.trim() : editCategoryOption;
-  };
 
   // Get emoji for category display
   const getCategoryEmoji = (category) => {
@@ -78,13 +71,7 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
   const handleEdit = () => {
     setIsEditing(true);
     setEditTitle(todo.title);
-
-    // Determine if the current category is predefined or custom
-    const currentCategory = todo.category || 'General';
-    const isPredefined = predefinedCategories.includes(currentCategory);
-    setEditCategoryOption(isPredefined ? currentCategory : 'Custom');
-    setEditCustomCategory(isPredefined ? '' : currentCategory);
-
+    setEditCategory(todo.category || '📋 General');
     setEditPriority(todo.priority || 'Medium');
     setEditDueDate(todo.due_date || '');
   };
@@ -121,15 +108,9 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
     }
 
     try {
-      const categoryValue = getEditCategoryValue();
-      if (!categoryValue) {
-        alert('Please select a category or enter a custom category');
-        return;
-      }
-
       const updateData = {
         title: editTitle.trim(),
-        category: categoryValue,
+        category: editCategory,
         priority: editPriority,
         dueDate: editDueDate || null
       };
@@ -146,13 +127,7 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
 
   const handleCancel = () => {
     setEditTitle(todo.title);
-
-    // Reset category options
-    const currentCategory = todo.category || 'General';
-    const isPredefined = predefinedCategories.includes(currentCategory);
-    setEditCategoryOption(isPredefined ? currentCategory : 'Custom');
-    setEditCustomCategory(isPredefined ? '' : currentCategory);
-
+    setEditCategory(todo.category || '📋 General');
     setEditPriority(todo.priority || 'Medium');
     setEditDueDate(todo.due_date || '');
     setIsEditing(false);
@@ -186,27 +161,17 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
                 </div>
                 <div className="form-group">
                   <select
-                    value={editCategoryOption}
-                    onChange={(e) => setEditCategoryOption(e.target.value)}
+                    value={editCategory}
+                    onChange={(e) => setEditCategory(e.target.value)}
                     className="category-edit-select"
                     onKeyDown={handleKeyPress}
                   >
                     {predefinedCategories.map(cat => (
                       <option key={cat} value={cat}>
-                        {cat === 'Custom' ? '📝 Custom' : cat}
+                        {cat}
                       </option>
                     ))}
                   </select>
-                  {editCategoryOption === 'Custom' && (
-                    <input
-                      type="text"
-                      value={editCustomCategory}
-                      onChange={(e) => setEditCustomCategory(e.target.value)}
-                      onKeyDown={handleKeyPress}
-                      className="custom-category-input"
-                      placeholder="Enter custom category..."
-                    />
-                  )}
                 </div>
                 <div className="form-group">
                   <select
@@ -239,7 +204,7 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
             <span className="todo-title">{todo.title}</span>
             <div className="todo-category">
               <span className="category-display">
-                {todo.category?.startsWith('📋') ? todo.category : getCategoryEmoji(todo.category || 'General')} {todo.category || 'General'}
+                {todo.category || '📋 General'}
               </span>
             </div>
             <div className="todo-priority">

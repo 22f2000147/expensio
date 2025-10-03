@@ -106,19 +106,23 @@ const App = () => {
   // Get emoji for category display
   const getCategoryEmoji = (category) => {
     if (category === 'All') return '📋';
+    // Extract emoji from category if it already has one, otherwise add it
+    if (category.includes(' ')) {
+      return category; // Already has emoji
+    }
     const emojiMap = {
-      'General': '📋',
-      'Work': '💼',
-      'Personal': '👤',
-      'Shopping': '🛒',
-      'Health': '🏥',
-      'Finance': '💰',
-      'Education': '📚',
-      'Travel': '✈️',
-      'Home': '🏠',
-      'Urgent': '🚨'
+      'General': '📋 General',
+      'Work': '💼 Work',
+      'Personal': '👤 Personal',
+      'Shopping': '🛒 Shopping',
+      'Health': '🏥 Health',
+      'Finance': '💰 Finance',
+      'Education': '📚 Education',
+      'Travel': '✈️ Travel',
+      'Home': '🏠 Home',
+      'Urgent': '🚨 Urgent'
     };
-    return emojiMap[category] || '📋';
+    return emojiMap[category] || '📋 General';
   };
 
   // Get unique priorities for filter dropdown
@@ -173,7 +177,7 @@ const App = () => {
               <option value="">📋 All Categories</option>
               {getUniqueCategories().map(category => (
                 <option key={category} value={category === 'All' ? '' : category}>
-                  {category === 'All' ? '📋 All Categories' : `${getCategoryEmoji(category)} ${category}`}
+                  {category === 'All' ? '📋 All Categories' : getCategoryEmoji(category)}
                 </option>
               ))}
             </select>
