@@ -1,0 +1,58 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const TodoForm = ({ onTodoAdded }) => {
+  const [title, setTitle] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!title.trim()) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/todos', {
+        title: title.trim()
+      });
+
+      onTodoAdded(response.data);
+      setTitle('');
+    } catch (error) {
+      console.error('Error adding todo:', error);
+      alert('Failed to add todo. Please make sure the backend is running.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="todo-form-container">
+      <h2>Add New Todo</h2>
+      <form onSubmit={handleSubmit} className="todo-form">
+        <div className="form-group">
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter todo title..."
+            className="todo-input"
+            disabled={loading}
+          />
+        </div>
+        <button
+          type="submit"
+          className="add-button"
+          disabled={loading || !title.trim()}
+        >
+          {loading ? 'Adding...' : 'Add Todo'}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default TodoForm;
