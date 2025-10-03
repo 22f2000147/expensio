@@ -113,6 +113,39 @@ app.post('/api/todos', (req, res) => {
   });
 });
 
+// PUT /api/todos/:id/title - Update only the title of a todo
+app.put('/api/todos/:id/title', (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  if (!title || title.trim().length === 0) {
+    return res.status(400).json({ error: 'Title is required and cannot be empty' });
+  }
+
+  const trimmedTitle = title.trim();
+  const sql = 'UPDATE todos SET title = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
+
+  db.run(sql, [trimmedTitle, id], function(err) {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+
+    if (this.changes === 0) {
+      return res.status(404).json({ error: 'Todo not found' });
+    }
+
+    // Get the updated todo
+    db.get('SELECT * FROM todos WHERE id = ?', [id], (err, row) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json(row);
+    });
+  });
+});
+
 // PUT /api/todos/:id - Update a todo (mark as completed or update title/category/priority/dueDate)
 app.put('/api/todos/:id', (req, res) => {
   const { id } = req.params;
