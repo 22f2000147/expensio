@@ -61,7 +61,7 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
   };
 
   return (
-    <div className={`todo-item ${todo.completed ? 'completed' : ''}`}>
+    <div className={`todo-item ${todo.completed ? 'completed' : ''} ${todo.is_overdue ? 'overdue' : ''}`}>
       <div className="todo-content">
         <span className="todo-title">{todo.title}</span>
         <div className="todo-category">
@@ -94,8 +94,14 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
           </span>
         </div>
         <span className="todo-date">
-          {new Date(todo.created_at).toLocaleDateString()}
+          Created: {new Date(todo.created_at).toLocaleDateString()}
         </span>
+        {todo.due_date && (
+          <span className={`todo-due-date ${todo.is_overdue ? 'overdue' : ''}`}>
+            Due: {new Date(todo.due_date).toLocaleDateString()}
+            {todo.is_overdue && <span className="overdue-badge">OVERDUE</span>}
+          </span>
+        )}
       </div>
 
       <div className="todo-actions">

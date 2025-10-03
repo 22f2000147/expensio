@@ -21,6 +21,7 @@ db.all("PRAGMA table_info(todos)", [], (err, columns) => {
 
   const hasCategoryColumn = columns.some(col => col.name === 'category');
   const hasPriorityColumn = columns.some(col => col.name === 'priority');
+  const hasDueDateColumn = columns.some(col => col.name === 'due_date');
 
   if (!hasCategoryColumn) {
     // Add category column to existing table
@@ -45,6 +46,18 @@ db.all("PRAGMA table_info(todos)", [], (err, columns) => {
       }
     });
   }
+
+  if (!hasDueDateColumn) {
+    // Add due_date column to existing table
+    const addDueDateSQL = 'ALTER TABLE todos ADD COLUMN due_date TEXT';
+    db.run(addDueDateSQL, (err) => {
+      if (err) {
+        console.error('Error adding due_date column:', err.message);
+      } else {
+        console.log('Due date column added to todos table');
+      }
+    });
+  }
 });
 
   const createTableSQL = `
@@ -54,6 +67,7 @@ db.all("PRAGMA table_info(todos)", [], (err, columns) => {
       category TEXT DEFAULT "General",
       priority TEXT DEFAULT "Medium",
       completed BOOLEAN DEFAULT 0,
+      due_date TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
@@ -64,6 +78,16 @@ db.all("PRAGMA table_info(todos)", [], (err, columns) => {
       console.error('Error creating todos table:', err.message);
     } else {
       console.log('Todos table ready');
+
+      // Create index for efficient querying of overdue tasks
+      const createIndexSQL = 'CREATE INDEX IF NOT EXISTS idx_todos_due_date ON todos(due_date)';
+      db.run(createIndexSQL, (err) => {
+        if (err) {
+          console.error('Error creating due_date index:', err.message);
+        } else {
+          console.log('Due date index created');
+        }
+      });
     }
   });
 }

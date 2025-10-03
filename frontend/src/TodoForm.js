@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const TodoForm = ({ onTodoAdded }) => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('General');
   const [priority, setPriority] = useState('Medium');
+  const [dueDate, setDueDate] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -20,13 +23,15 @@ const TodoForm = ({ onTodoAdded }) => {
       const response = await axios.post('http://localhost:5000/api/todos', {
         title: title.trim(),
         category: category.trim(),
-        priority: priority
+        priority: priority,
+        dueDate: dueDate ? dueDate.toISOString().split('T')[0] : null
       });
 
       onTodoAdded(response.data);
       setTitle('');
       setCategory('General');
       setPriority('Medium');
+      setDueDate(null);
     } catch (error) {
       console.error('Error adding todo:', error);
       alert('Failed to add todo. Please make sure the backend is running.');
@@ -70,6 +75,18 @@ const TodoForm = ({ onTodoAdded }) => {
             <option value="Medium">🟡 Medium</option>
             <option value="High">🔴 High</option>
           </select>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Due Date (Optional)</label>
+          <DatePicker
+            selected={dueDate}
+            onChange={(date) => setDueDate(date)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Select due date"
+            minDate={new Date()}
+            className="date-picker"
+            disabled={loading}
+          />
         </div>
         <button
           type="submit"

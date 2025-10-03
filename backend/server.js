@@ -36,7 +36,7 @@ app.get('/api/todos', (req, res) => {
   }
 
   // Validate sortBy parameter
-  const validSortFields = ['created_at', 'title', 'category', 'priority', 'completed'];
+  const validSortFields = ['created_at', 'title', 'category', 'priority', 'completed', 'due_date'];
   const sortField = validSortFields.includes(sortBy) ? sortBy : 'created_at';
 
   // Validate sortOrder parameter
@@ -49,13 +49,26 @@ app.get('/api/todos', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
-    res.json(rows);
+
+    // Add is_overdue field to each todo
+    const todosWithOverdueStatus = rows.map(todo => {
+      const isOverdue = todo.due_date &&
+        !todo.completed &&
+        new Date(todo.due_date) < new Date().setHours(0, 0, 0, 0);
+
+      return {
+        ...todo,
+        is_overdue: isOverdue
+      };
+    });
+
+    res.json(todosWithOverdueStatus);
   });
 });
 
 // POST /api/todos - Create a new todo
 app.post('/api/todos', (req, res) => {
-  const { title, category = 'General', priority = 'Medium' } = req.body;
+  const { title, category = 'General', priority = 'Medium', dueDate } = req.body;
 
   if (!title) {
     return res.status(400).json({ error: 'Title is required' });
@@ -67,8 +80,23 @@ app.post('/api/todos', (req, res) => {
     return res.status(400).json({ error: 'Priority must be one of: Low, Medium, High' });
   }
 
-  const sql = 'INSERT INTO todos (title, category, priority) VALUES (?, ?, ?)';
-  db.run(sql, [title, category, priority], function(err) {
+  // Validate due date if provided
+  if (dueDate) {
+    const dueDateObj = new Date(dueDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (isNaN(dueDateObj.getTime())) {
+      return res.status(400).json({ error: 'Invalid due date format. Please use YYYY-MM-DD format.' });
+    }
+
+    if (dueDateObj < today) {
+      return res.status(400).json({ error: 'Due date cannot be in the past.' });
+    }
+  }
+
+  const sql = 'INSERT INTO todos (title, category, priority, due_date) VALUES (?, ?, ?, ?)';
+  db.run(sql, [title, category, priority, dueDate || null], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -85,13 +113,13 @@ app.post('/api/todos', (req, res) => {
   });
 });
 
-// PUT /api/todos/:id - Update a todo (mark as completed or update title/category/priority)
+// PUT /api/todos/:id - Update a todo (mark as completed or update title/category/priority/dueDate)
 app.put('/api/todos/:id', (req, res) => {
   const { id } = req.params;
-  const { title, category, priority, completed } = req.body;
+  const { title, category, priority, completed, dueDate } = req.body;
 
-  if (title === undefined && category === undefined && priority === undefined && completed === undefined) {
-    return res.status(400).json({ error: 'Title, category, priority, or completed status is required' });
+  if (title === undefined && category === undefined && priority === undefined && completed === undefined && dueDate === undefined) {
+    return res.status(400).json({ error: 'Title, category, priority, completed status, or due date is required' });
   }
 
   // Validate priority if provided
@@ -99,6 +127,23 @@ app.put('/api/todos/:id', (req, res) => {
     const validPriorities = ['Low', 'Medium', 'High'];
     if (!validPriorities.includes(priority)) {
       return res.status(400).json({ error: 'Priority must be one of: Low, Medium, High' });
+    }
+  }
+
+  // Validate due date if provided
+  if (dueDate !== undefined) {
+    if (dueDate !== null && dueDate !== '') {
+      const dueDateObj = new Date(dueDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (isNaN(dueDateObj.getTime())) {
+        return res.status(400).json({ error: 'Invalid due date format. Please use YYYY-MM-DD format.' });
+      }
+
+      if (dueDateObj < today) {
+        return res.status(400).json({ error: 'Due date cannot be in the past.' });
+      }
     }
   }
 
@@ -123,6 +168,10 @@ app.put('/api/todos/:id', (req, res) => {
   if (completed !== undefined) {
     fieldsToUpdate.push('completed = ?');
     values.push(completed);
+  }
+  if (dueDate !== undefined) {
+    fieldsToUpdate.push('due_date = ?');
+    values.push(dueDate);
   }
 
   // Always update the updated_at timestamp

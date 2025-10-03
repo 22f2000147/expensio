@@ -181,6 +181,7 @@ const App = () => {
               <option value="title">Title</option>
               <option value="category">Category</option>
               <option value="priority">Priority</option>
+              <option value="due_date">Due Date</option>
               <option value="completed">Status</option>
             </select>
             <button
