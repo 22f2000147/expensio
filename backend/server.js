@@ -155,6 +155,11 @@ app.put('/api/todos/:id', (req, res) => {
     return res.status(400).json({ error: 'Title, category, priority, completed status, or due date is required' });
   }
 
+  // Validate title if provided
+  if (title !== undefined && (!title || title.trim().length === 0)) {
+    return res.status(400).json({ error: 'Title is required and cannot be empty' });
+  }
+
   // Validate priority if provided
   if (priority !== undefined) {
     const validPriorities = ['Low', 'Medium', 'High'];
