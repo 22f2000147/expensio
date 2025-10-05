@@ -314,22 +314,38 @@ body {
 
 .search-input:focus,
 .category-filter:focus,
-.priority-filter:focus {
-    outline: none;
-    border-color: var(--border-focus);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-    background: var(--bg-card);
-    transform: translateY(-1px);
-}
+.priority-filter:focus,
+.todo-input:focus,
+.priority-select:focus,
+.category-select:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus,
+.custom-category-input:focus,
+.edit-input:focus,
+.category-edit-input:focus,
+.date-picker:focus {
+     outline: none;
+     border-color: #8b5cf6;
+     box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+     background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 242, 255, 0.9));
+     transform: translateY(-1px);
+ }
 
 .sort-select:focus {
-    outline: none;
-    border-color: var(--border-focus);
-    border-right: none;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-    background: var(--bg-card);
-    transform: translateY(-1px);
-}
+     outline: none;
+     border-color: #8b5cf6;
+     border-right: none;
+     box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+     background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 242, 255, 0.9));
+     transform: translateY(-1px);
+ }
 
 .search-input::placeholder {
    color: var(--text-muted);
@@ -1729,60 +1745,60 @@ input[type="date"]:focus {
 
 /* Purple Light theme (light-mode variant using purple gradients) */
 [data-theme="light"] {
-   /* Purple gradient light mode variables */
+   /* Enhanced purple gradient light mode variables - optimized for visibility */
    /* Page background: soft lavender → pastel purple → light grey-white blend */
-   --bg-primary: linear-gradient(180deg, #f8f6ff 0%, #f0ebfa 40%, #f5f3ff 100%);
-   /* Secondary surfaces: soft, barely-contrasting light gradient for cards */
-   --bg-secondary: linear-gradient(180deg, rgba(253, 251, 255, 0.98) 0%, rgba(248, 245, 253, 0.95) 40%, rgba(255, 255, 255, 0.92) 100%);
+   --bg-primary: linear-gradient(180deg, #f5f0ff 0%, #ebe0ff 40%, #f0e8ff 100%);
+   /* Secondary surfaces: enhanced contrast light gradient for cards */
+   --bg-secondary: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 242, 255, 0.9) 40%, rgba(252, 250, 255, 0.85) 100%);
    /* Tertiary surfaces: subtle white → very light purple tint for inputs */
-   --bg-tertiary: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(250, 248, 255, 0.9));
-   /* Header gradient: lavender → violet */
-   --bg-header: linear-gradient(135deg, #e6d3ff 0%, #c4a1ff 100%);
-   /* Button gradients: violet → royal purple */
-   --bg-button-primary: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
-   --bg-button-success: #2e8b57;
-   --bg-button-warning: #d48806;
-   --bg-button-danger: #c62828;
-   --bg-button-clear: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
+   --bg-tertiary: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(250, 245, 255, 0.8));
+   /* Header gradient: enhanced lavender → violet for better visibility */
+   --bg-header: linear-gradient(135deg, #d8c4ff 0%, #b794f6 100%);
+   /* Button gradients: more vibrant violet → royal purple for better contrast */
+   --bg-button-primary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+   --bg-button-success: #059669;
+   --bg-button-warning: #d97706;
+   --bg-button-danger: #dc2626;
+   --bg-button-clear: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
 
-   --text-primary: #2d1b3d;
-   --text-secondary: #5a4a6b;
-   --text-muted: #7b6b8d;
+   --text-primary: #1f2937;
+   --text-secondary: #4b5563;
+   --text-muted: #6b7280;
    --text-inverse: #ffffff;
-   --text-error: #b00020;
+   --text-error: #991b1b;
 
-   --border-primary: rgba(147, 107, 207, 0.12);
-   --border-secondary: rgba(147, 107, 207, 0.06);
-   --border-focus: #9d4edd;
+   --border-primary: rgba(139, 92, 246, 0.2);
+   --border-secondary: rgba(139, 92, 246, 0.1);
+   --border-focus: #8b5cf6;
 
-   --shadow-light: rgba(147, 107, 207, 0.06);
-   --shadow-medium: rgba(147, 107, 207, 0.12);
-   --shadow-focus: rgba(147, 107, 207, 0.14);
-   --shadow-button: rgba(123, 44, 191, 0.16);
-   --shadow-button-hover: rgba(123, 44, 191, 0.26);
-   --shadow-clear-hover: rgba(198, 49, 49, 0.12);
+   --shadow-light: rgba(139, 92, 246, 0.08);
+   --shadow-medium: rgba(139, 92, 246, 0.15);
+   --shadow-focus: rgba(139, 92, 246, 0.2);
+   --shadow-button: rgba(124, 58, 237, 0.2);
+   --shadow-button-hover: rgba(124, 58, 237, 0.3);
+   --shadow-clear-hover: rgba(220, 38, 38, 0.15);
 
-   --accent-blue: #6f4ce7;
-   --accent-green: #66bb6a;
-   --accent-orange: #ffb74d;
-   --accent-red: #ef5350;
-   --accent-purple: #9d4edd;
+   --accent-blue: #6366f1;
+   --accent-green: #059669;
+   --accent-orange: #d97706;
+   --accent-red: #dc2626;
+   --accent-purple: #8b5cf6;
 
-   --priority-low-bg: rgba(147, 107, 207, 0.12);
-   --priority-low-border: rgba(147, 107, 207, 0.24);
-   --priority-low-text: #8b5fbf;
+   --priority-low-bg: rgba(139, 92, 246, 0.15);
+   --priority-low-border: rgba(139, 92, 246, 0.3);
+   --priority-low-text: #7c3aed;
 
-   --priority-medium-bg: rgba(183, 127, 217, 0.12);
-   --priority-medium-border: rgba(183, 127, 217, 0.24);
-   --priority-medium-text: #a855f7;
+   --priority-medium-bg: rgba(168, 85, 247, 0.15);
+   --priority-medium-border: rgba(168, 85, 247, 0.3);
+   --priority-medium-text: #9333ea;
 
-   --priority-high-bg: rgba(198, 49, 49, 0.12);
-   --priority-high-border: rgba(198, 49, 49, 0.24);
-   --priority-high-text: #c62828;
+   --priority-high-bg: rgba(239, 68, 68, 0.15);
+   --priority-high-border: rgba(239, 68, 68, 0.3);
+   --priority-high-text: #dc2626;
 
-   --status-completed-bg: #f2fbf7;
-   --status-completed-border: #66bb6a;
-   --status-pending-border: #9d4edd;
+   --status-completed-bg: rgba(16, 185, 129, 0.1);
+   --status-completed-border: #059669;
+   --status-pending-border: #8b5cf6;
  }
 
 /* Light-theme surface tweaks: make cards, buttons and inputs pop with purple gradients */
@@ -1820,10 +1836,45 @@ input[type="date"]:focus {
  [data-theme="light"] .priority-select,
  [data-theme="light"] .category-select,
  [data-theme="light"] .search-input,
- [data-theme="light"] .sort-select {
-   background: var(--bg-tertiary);
-   border: 1px solid rgba(147, 107, 207, 0.08);
-   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+ [data-theme="light"] .sort-select,
+ [data-theme="light"] input[type="text"],
+ [data-theme="light"] input[type="email"],
+ [data-theme="light"] input[type="password"],
+ [data-theme="light"] input[type="number"],
+ [data-theme="light"] input[type="tel"],
+ [data-theme="light"] input[type="url"],
+ [data-theme="light"] input[type="search"],
+ [data-theme="light"] textarea,
+ [data-theme="light"] select,
+ [data-theme="light"] .custom-category-input,
+ [data-theme="light"] .edit-input,
+ [data-theme="light"] .category-edit-input,
+ [data-theme="light"] .date-picker {
+   background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(250, 245, 255, 0.8));
+   border: 1px solid rgba(139, 92, 246, 0.2);
+   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+ }
+
+ [data-theme="light"] .todo-input:hover,
+ [data-theme="light"] .priority-select:hover,
+ [data-theme="light"] .category-select:hover,
+ [data-theme="light"] .search-input:hover,
+ [data-theme="light"] .sort-select:hover,
+ [data-theme="light"] input[type="text"]:hover,
+ [data-theme="light"] input[type="email"]:hover,
+ [data-theme="light"] input[type="password"]:hover,
+ [data-theme="light"] input[type="number"]:hover,
+ [data-theme="light"] input[type="tel"]:hover,
+ [data-theme="light"] input[type="url"]:hover,
+ [data-theme="light"] input[type="search"]:hover,
+ [data-theme="light"] textarea:hover,
+ [data-theme="light"] select:hover,
+ [data-theme="light"] .custom-category-input:hover,
+ [data-theme="light"] .edit-input:hover,
+ [data-theme="light"] .category-edit-input:hover,
+ [data-theme="light"] .date-picker:hover {
+   border-color: rgba(139, 92, 246, 0.3);
+   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 242, 255, 0.85));
  }
 
  [data-theme="light"] .todo-item {

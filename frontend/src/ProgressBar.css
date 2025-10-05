@@ -126,16 +126,16 @@
     box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
   }
 
-/* Modern Light Theme Support with Purple Gradients */
+/* Enhanced Light Theme Support with Purple Gradients - optimized for visibility */
 [data-theme="light"] .progress-bar {
-    background: var(--bg-tertiary);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-primary);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(250, 245, 255, 0.8));
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
   }
 
  [data-theme="light"] .progress-fill {
-    background: var(--gradient-primary);
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4);
   }
 
 /* Modern Responsive Design */
