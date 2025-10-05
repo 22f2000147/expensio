@@ -106,19 +106,19 @@
 
 /* Dark Theme Variables */
 [data-theme="dark"] {
-   --bg-primary: #0f172a;
-   --bg-secondary: #1e293b;
-   --bg-tertiary: #334155;
-   --bg-header: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-   --bg-card: #1e293b;
-   --bg-input: #334155;
-   --bg-overlay: rgba(30, 41, 59, 0.8);
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --bg-header: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    --bg-card: #1e293b;
+    --bg-input: #334155;
+    --bg-overlay: rgba(30, 41, 59, 0.8);
 
-   --text-primary: #f1f5f9;
-   --text-secondary: #cbd5e1;
-   --text-muted: #94a3b8;
-   --text-inverse: #0f172a;
-   --text-error: #fca5a5;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-inverse: #0f172a;
+    --text-error: #fca5a5;
 
    --border-primary: #475569;
    --border-secondary: #334155;
@@ -230,12 +230,17 @@ body {
  }
 
 .app-header p {
-   font-size: 1.125rem;
-   opacity: 0.9;
-   font-weight: 400;
-   position: relative;
-   z-index: 1;
- }
+    font-size: 1.125rem;
+    opacity: 0.9;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Make the specific todo app description text white in dark mode */
+  [data-theme="dark"] .app-header p {
+    color: #ffffff;
+  }
 
 .app-header:hover {
    transform: translateY(-2px);
@@ -312,6 +317,7 @@ body {
     backdrop-filter: blur(10px);
 }
 
+/* Focus styles for light mode */
 .search-input:focus,
 .category-filter:focus,
 .priority-filter:focus,
@@ -338,14 +344,48 @@ select:focus,
      transform: translateY(-1px);
  }
 
-.sort-select:focus {
-     outline: none;
-     border-color: #8b5cf6;
-     border-right: none;
-     box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
-     background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 242, 255, 0.9));
-     transform: translateY(-1px);
+ /* Dark mode focus styles - maintain dark background */
+ [data-theme="dark"] .search-input:focus,
+ [data-theme="dark"] .category-filter:focus,
+ [data-theme="dark"] .priority-filter:focus,
+ [data-theme="dark"] .todo-input:focus,
+ [data-theme="dark"] .priority-select:focus,
+ [data-theme="dark"] .category-select:focus,
+ [data-theme="dark"] input[type="text"]:focus,
+ [data-theme="dark"] input[type="email"]:focus,
+ [data-theme="dark"] input[type="password"]:focus,
+ [data-theme="dark"] input[type="number"]:focus,
+ [data-theme="dark"] input[type="tel"]:focus,
+ [data-theme="dark"] input[type="url"]:focus,
+ [data-theme="dark"] input[type="search"]:focus,
+ [data-theme="dark"] textarea:focus,
+ [data-theme="dark"] select:focus,
+ [data-theme="dark"] .custom-category-input:focus,
+ [data-theme="dark"] .edit-input:focus,
+ [data-theme="dark"] .category-edit-input:focus,
+ [data-theme="dark"] .date-picker:focus {
+     background: var(--bg-input);
+     border-color: var(--border-focus);
+     box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
  }
+
+/* Sort select focus styles for light mode */
+.sort-select:focus {
+      outline: none;
+      border-color: #8b5cf6;
+      border-right: none;
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 242, 255, 0.9));
+      transform: translateY(-1px);
+  }
+
+  /* Dark mode sort select focus styles - maintain dark background */
+  [data-theme="dark"] .sort-select:focus {
+      background: var(--bg-input);
+      border-color: var(--border-focus);
+      border-right: none;
+      box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
+  }
 
 .search-input::placeholder {
    color: var(--text-muted);
@@ -585,12 +625,23 @@ select:focus,
  }
 
 .priority-select option {
-   padding: 12px 16px;
-   background: var(--bg-card);
-   color: var(--text-primary);
-   min-height: 48px;
-   font-size: 0.95rem;
- }
+    padding: 12px 16px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
+
+  /* Make search and filter dropdown options consistent with category dropdown in dark mode */
+  .category-filter option,
+  .priority-filter option,
+  .sort-select option {
+    padding: 12px 16px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
 
 .todo-input::placeholder {
    color: var(--text-muted);
@@ -1356,20 +1407,30 @@ select:focus,
 
 /* Theme Toggle Styles */
 .theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: var(--bg-button-primary);
-  color: var(--text-inverse);
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  font-weight: 500;
-  box-shadow: 0 2px 4px var(--shadow-light);
-}
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   padding: 10px 16px;
+   background: var(--bg-button-primary);
+   color: var(--text-inverse);
+   border: none;
+   border-radius: 8px;
+   font-size: 0.9rem;
+   cursor: pointer;
+   transition: all var(--transition-fast);
+   font-weight: 500;
+   box-shadow: 0 2px 4px var(--shadow-light);
+ }
+
+ /* Make theme toggle text white in dark mode */
+ [data-theme="dark"] .theme-toggle {
+   color: #ffffff;
+ }
+
+ /* Add border around theme toggle button - consistent with other buttons in dark mode */
+ [data-theme="dark"] .theme-toggle {
+   border: 2px solid var(--border-primary) !important;
+ }
 
 .theme-toggle:hover {
   transform: translateY(-2px);

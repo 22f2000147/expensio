@@ -100,7 +100,7 @@ const App = () => {
   // Get unique categories for filter dropdown
   const getUniqueCategories = () => {
     const categories = todos.map(todo => todo.category || 'General');
-    return ['All', ...new Set(categories)];
+    return [...new Set(categories)];
   };
 
   // Get emoji for category display
@@ -129,7 +129,7 @@ const App = () => {
   const getUniquePriorities = () => {
     const priorities = todos.map(todo => todo.priority).filter(Boolean);
     const uniquePriorities = [...new Set(priorities)];
-    return ['All', ...uniquePriorities.sort()];
+    return uniquePriorities.sort();
   };
 
   // Clear all filters

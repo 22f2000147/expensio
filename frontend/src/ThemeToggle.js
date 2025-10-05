@@ -21,7 +21,7 @@ const ThemeToggle = () => {
 			aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
 			title={isLight ? 'Active: Light — click to return to Dark' : 'Switch to Light theme'}
 		>
-			{isLight ? 'Light ✓' : 'Switch to Light'}
+			{isLight ? '🌙 Dark Mode' : '☀️ Light Mode'}
 		</button>
 	);
 };
