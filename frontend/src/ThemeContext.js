@@ -5,18 +5,13 @@ const ThemeContext = createContext();
 
 // Theme provider component
 export const ThemeProvider = ({ children }) => {
-  // Initialize theme from localStorage or system preference
+  // Initialize theme from localStorage or system preference (light/dark only)
   const getInitialTheme = () => {
-    // Check if we're in a browser environment
-    if (typeof window === 'undefined') return 'light';
+    if (typeof window === 'undefined') return 'dark';
 
-    // Check localStorage first
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
-      return savedTheme;
-    }
+    if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme;
 
-    // Fall back to system preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
@@ -41,7 +36,7 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [theme]);
 
-  // Listen for system theme changes
+  // Listen for system theme changes (only when user hasn't chosen a theme)
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -67,16 +62,19 @@ export const ThemeProvider = ({ children }) => {
     }
   }, []);
 
-  // Toggle theme function
+  // Toggle between dark and light
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
 
   // Set specific theme function
   const setSpecificTheme = (newTheme) => {
-    if (newTheme === 'light' || newTheme === 'dark') {
-      setTheme(newTheme);
+    // Accept 'light' as the bluish light mode, otherwise 'dark'
+    if (newTheme === 'light') {
+      setTheme('light');
+      return;
     }
+    setTheme('dark');
   };
 
   // Context value

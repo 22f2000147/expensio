@@ -1,33 +1,29 @@
 import React from 'react';
 import { useTheme } from './ThemeContext';
 
+// Small toggle button. Click to switch between dark and bluish light themes.
 const ThemeToggle = () => {
-  const { theme, toggleTheme, mounted } = useTheme();
+	const { theme, setSpecificTheme, mounted } = useTheme();
 
-  // Don't render until mounted to avoid hydration mismatch
-  if (!mounted) {
-    return (
-      <button className="theme-toggle" disabled>
-        <span className="theme-icon">🌙</span>
-      </button>
-    );
-  }
+	if (!mounted) return null;
 
-  return (
-    <button
-      className="theme-toggle"
-      onClick={toggleTheme}
-      title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-    >
-      <span className="theme-icon">
-        {theme === 'light' ? '🌙' : '☀️'}
-      </span>
-      <span className="theme-text">
-        {theme === 'light' ? 'Dark' : 'Light'}
-      </span>
-    </button>
-  );
+	const isLight = theme === 'light';
+
+	const handleToggle = () => {
+		setSpecificTheme(isLight ? 'dark' : 'light');
+	};
+
+	return (
+		<button
+			className="theme-toggle theme-toggle-button"
+			onClick={handleToggle}
+			aria-pressed={isLight}
+			aria-label={isLight ? 'Switch to dark theme' : 'Switch to light theme'}
+			title={isLight ? 'Active: Light — click to return to Dark' : 'Switch to Light theme'}
+		>
+			{isLight ? 'Light ✓' : 'Switch to Light'}
+		</button>
+	);
 };
 
 export default ThemeToggle;

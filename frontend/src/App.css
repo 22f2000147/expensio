@@ -1,56 +1,66 @@
-/ CSS Custom Properties for Theme Variables */
+/* CSS Custom Properties for Theme Variables */
 :root {
-  /* Light theme colors - Updated with gradient blue and grey-white palette */
-  --bg-primary: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%);
+  /* Light theme colors - Using light mode palette with subtle purple gradient */
+  /* Brand & layout tokens */
+  --brand: #6f4ce7; /* primary brand color (purple) */
+  --brand-600: #5b3fd0;
+  --brand-400: #8e6ad6;
+  --muted: #6b7280;
+  --radius: 10px;
+  /* Elevation shadows (light default) */
+  --elev-1: 0 1px 4px rgba(16,24,40,0.06);
+  --elev-2: 0 8px 24px rgba(16,24,40,0.08);
+  --elev-3: 0 18px 50px rgba(16,24,40,0.12);
+  --bg-primary: rgb(98, 142, 186);
   --bg-secondary: #ffffff;
-  --bg-tertiary: #f8f9fa;
-  --bg-header: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-  --bg-button-primary: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-  --bg-button-success: #4caf50;
-  --bg-button-warning: #ff9800;
-  --bg-button-danger: #f44336;
-  --bg-button-clear: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+  --bg-tertiary: #f1f3f4;
+  --bg-header: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+  --bg-button-primary: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  --bg-button-success: #388e3c;
+  --bg-button-warning: #f57c00;
+  --bg-button-danger: #d32f2f;
+  --bg-button-clear: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
 
-   --text-primary: #2c3e50;
-   --text-secondary: #5a6c7d;
-   --text-muted: #8e9eab;
+   --text-primary: #2d3748;
+   --text-secondary: #4a5568;
+   --text-muted: #718096;
   --text-inverse: #ffffff;
-  --text-error: #c62828;
+  --text-error: #c53030;
 
-  --border-primary: #dddddd;
-  --border-secondary: #eeeeee;
-  --border-focus: #667eea;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e0;
+  --border-focus: #4a5568;
 
-  --shadow-light: rgba(0, 0, 0, 0.1);
-  --shadow-medium: rgba(0, 0, 0, 0.15);
-  --shadow-focus: rgba(102, 126, 234, 0.1);
-  --shadow-button: rgba(102, 126, 234, 0.3);
-  --shadow-button-hover: rgba(102, 126, 234, 0.3);
-  --shadow-clear-hover: rgba(238, 90, 82, 0.3);
+  --shadow-light: rgba(0, 0, 0, 0.05);
+  --shadow-medium: rgba(0, 0, 0, 0.1);
+  --shadow-focus: rgba(74, 85, 104, 0.1);
+  --shadow-button: rgba(74, 85, 104, 0.2);
+  --shadow-button-hover: rgba(74, 85, 104, 0.3);
+  --shadow-clear-hover: rgba(211, 47, 47, 0.2);
 
   --accent-blue: #2196f3;
   --accent-green: #4caf50;
   --accent-orange: #ff9800;
   --accent-red: #f44336;
-  --accent-purple: #2196f3;
+  --accent-purple: #9c27b0;
 
-  /* Priority colors */
-  --priority-low-bg: rgba(33, 150, 243, 0.1);
+  /* Priority colors - vibrant for light theme */
+  --priority-low-bg: rgba(33, 150, 243, 0.15);
   --priority-low-border: rgba(33, 150, 243, 0.3);
-  --priority-low-text: #2196f3;
+  --priority-low-text: #1976d2;
 
-  --priority-medium-bg: rgba(255, 193, 7, 0.1);
-  --priority-medium-border: rgba(255, 193, 7, 0.3);
-  --priority-medium-text: #ffc107;
+  --priority-medium-bg: rgba(255, 152, 0, 0.15);
+  --priority-medium-border: rgba(255, 152, 0, 0.3);
+  --priority-medium-text: #e65100;
 
-  --priority-high-bg: rgba(244, 67, 54, 0.1);
+  --priority-high-bg: rgba(244, 67, 54, 0.15);
   --priority-high-border: rgba(244, 67, 54, 0.3);
-  --priority-high-text: #f44336;
+  --priority-high-text: #c62828;
 
-  /* Status colors */
-  --status-completed-bg: #f0f8f0;
-  --status-completed-border: #4caf50;
-  --status-pending-border: #667eea;
+  /* Status colors - adapted for light theme */
+  --status-completed-bg: #f0fff4;
+  --status-completed-border: #38a169;
+  --status-pending-border: #4a5568;
 
   /* Transitions */
   --transition-fast: 0.2s ease;
@@ -112,6 +122,9 @@
   --status-pending-border: #4a5568;
 }
 
+/* Purple theme colors */
+
+
 /* Base styles with theme variables */
 * {
   box-sizing: border-box;
@@ -149,8 +162,8 @@ body {
   padding: 20px;
   background: var(--bg-header);
   color: var(--text-inverse);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px var(--shadow-light);
+  border-radius: var(--radius);
+  box-shadow: var(--elev-2);
   transition: background var(--transition-medium), box-shadow var(--transition-medium);
 }
 
@@ -168,10 +181,10 @@ body {
 /* Search and Filter Section */
 .search-filter-container {
   background: var(--bg-secondary);
-  border-radius: 10px;
+  border-radius: calc(var(--radius) - 2px);
   padding: 25px;
   margin-bottom: 25px;
-  box-shadow: 0 2px 10px var(--shadow-light);
+  box-shadow: var(--elev-1);
   transition: background-color var(--transition-medium), box-shadow var(--transition-medium);
 }
 
@@ -258,9 +271,9 @@ body {
 /* Main Content */
 .app-main {
   background: var(--bg-secondary);
-  border-radius: 10px;
+  border-radius: calc(var(--radius) - 2px);
   padding: 30px;
-  box-shadow: 0 2px 10px var(--shadow-light);
+  box-shadow: var(--elev-1);
   margin-bottom: 20px;
   transition: background-color var(--transition-medium), box-shadow var(--transition-medium);
   position: relative;
@@ -343,6 +356,45 @@ body {
 
 .todo-input::placeholder {
   color: var(--text-muted);
+}
+
+/* Theme selector styles */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 2px solid var(--border-primary);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  min-height: 40px;
+  transition: border-color var(--transition-medium), background-color var(--transition-medium), color var(--transition-medium);
+}
+
+.theme-select:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--shadow-focus);
+}
+
+.theme-toggle-button {
+  /* Use tokenized button base to keep consistency */
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: 0 2px 6px var(--shadow-button);
+}
+
+.theme-toggle-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px var(--shadow-button-hover);
 }
 
 /* Custom Category Input Styles */
@@ -516,31 +568,41 @@ body {
   gap: 10px;
 }
 
-.toggle-button, .delete-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
+.toggle-button, .delete-button, .edit-button, .add-button {
+  /* Base small action buttons use the unified .btn styles */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: calc(var(--radius) - 4px);
   font-size: 0.9rem;
   cursor: pointer;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  border: none;
+  background: var(--bg-button-ghost, transparent);
+  color: var(--text-primary);
 }
 
 .toggle-button.complete {
   background: var(--bg-button-success);
   color: var(--text-inverse);
+  box-shadow: var(--elev-1);
 }
 
 .toggle-button.undo {
   background: var(--bg-button-warning);
   color: var(--text-inverse);
+  box-shadow: var(--elev-1);
 }
 
 .delete-button {
   background: var(--bg-button-danger);
   color: var(--text-inverse);
+  box-shadow: var(--elev-1);
 }
 
-.toggle-button:hover, .delete-button:hover {
+.toggle-button:hover, .delete-button:hover, .edit-button:hover, .add-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 8px var(--shadow-medium);
 }
@@ -1169,4 +1231,139 @@ input[type="date"]:focus {
 
 [data-theme="dark"] .overdue-badge {
  background: var(--accent-red);
+}
+
+/* Blue theme (light-mode variant using blue accents) */
+[data-theme="light"] {
+  /* Bluish light mode variables */
+  /* Page background: subtle light gray -> soft blue gradient for a pleasant light theme */
+  --bg-primary: linear-gradient(180deg, #f6f7f9 0%, #eef6fb 40%, #e6f3fb 100%);
+  /* Secondary surfaces: soft, barely-contrasting light gradient for cards */
+  --bg-secondary: linear-gradient(180deg, rgba(250,250,251,0.98) 0%, rgba(243,248,252,0.95) 40%, rgba(255,255,255,0.92) 100%);
+  /* Tertiary surfaces: subtle white -> very light blue tint for inputs */
+  --bg-tertiary: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(247,252,255,0.9));
+  /* Keep header color unchanged (still purple as requested) */
+  --bg-header: linear-gradient(135deg, #8e6ad6 0%, #6b3fb2 100%);
+  --bg-button-primary: linear-gradient(135deg, #2b6fb3 0%, #184f8a 100%);
+  --bg-button-success: #2e8b57;
+  --bg-button-warning: #d48806;
+  --bg-button-danger: #c62828;
+  --bg-button-clear: linear-gradient(135deg, #3a8edc 0%, #2b6fb3 100%);
+
+  --text-primary: #0f1723;
+  --text-secondary: #274055;
+  --text-muted: #567089;
+  --text-inverse: #ffffff;
+  --text-error: #b00020;
+
+  --border-primary: rgba(27,76,133,0.12);
+  --border-secondary: rgba(27,76,133,0.06);
+  --border-focus: #3a8edc;
+
+  --shadow-light: rgba(142,106,214,0.06);
+  --shadow-medium: rgba(142,106,214,0.12);
+  --shadow-focus: rgba(142,106,214,0.14);
+  --shadow-button: rgba(107,63,178,0.16);
+  --shadow-button-hover: rgba(107,63,178,0.26);
+  --shadow-clear-hover: rgba(198,49,49,0.12);
+
+  --accent-blue: #6f4ce7;
+  --accent-green: #66bb6a;
+  --accent-orange: #ffb74d;
+  --accent-red: #ef5350;
+  --accent-purple: #8e6ad6;
+
+  --priority-low-bg: rgba(142,106,214,0.12);
+  --priority-low-border: rgba(142,106,214,0.24);
+  --priority-low-text: #7b4da0;
+
+  --priority-medium-bg: rgba(183,127,217,0.12);
+  --priority-medium-border: rgba(183,127,217,0.24);
+  --priority-medium-text: #8e6ad6;
+
+  --priority-high-bg: rgba(198,49,49,0.12);
+  --priority-high-border: rgba(198,49,49,0.24);
+  --priority-high-text: #c62828;
+
+  --status-completed-bg: #f2fbf7;
+  --status-completed-border: #66bb6a;
+  --status-pending-border: #3a8edc;
+}
+
+/* Light-theme surface tweaks: make cards, buttons and inputs pop */
+[data-theme="light"] .search-filter-container,
+[data-theme="light"] .app-main {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(142,106,214,0.08);
+  box-shadow: 0 8px 24px rgba(142,106,214,0.06);
+}
+
+[data-theme="light"] .theme-toggle-button,
+[data-theme="light"] .sort-order-button,
+[data-theme="light"] .clear-filters-button {
+  background: linear-gradient(135deg, #8e6ad6 0%, #6b3fb2 100%);
+  color: var(--text-inverse);
+  border: 1px solid rgba(107,63,178,0.12);
+  box-shadow: 0 6px 18px rgba(107,63,178,0.12);
+}
+
+[data-theme="light"] .theme-toggle-button:hover,
+[data-theme="light"] .sort-order-button:hover,
+[data-theme="light"] .clear-filters-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(107,63,178,0.18);
+}
+
+[data-theme="light"] .todo-input,
+[data-theme="light"] .priority-select,
+[data-theme="light"] .category-select,
+[data-theme="light"] .search-input,
+[data-theme="light"] .sort-select {
+  background: var(--bg-tertiary);
+  border: 1px solid rgba(142,106,214,0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+[data-theme="light"] .todo-item {
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,243,250,0.9));
+  border: 1px solid rgba(142,106,214,0.06);
+  box-shadow: 0 4px 12px rgba(142,106,214,0.04);
+}
+
+[data-theme="light"] .priority-badge {
+  background: rgba(142,106,214,0.12);
+  color: var(--priority-low-text);
+  border: 1px solid rgba(142,106,214,0.18);
+}
+
+/* Unified component styles (use tokens above) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  border: none;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-600) 100%);
+  color: var(--text-inverse);
+  box-shadow: var(--elev-2);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.card {
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--bg-secondary);
+  box-shadow: var(--elev-1);
+  border: 1px solid rgba(0,0,0,0.03);
 }

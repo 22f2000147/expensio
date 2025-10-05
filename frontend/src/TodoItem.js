@@ -38,6 +38,29 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
     };
     return emojiMap[category] || '📋';
   };
+  // Normalize category string by removing emoji/punctuation (simple ASCII-safe)
+  const normalizeCategory = (cat) => {
+    if (!cat) return 'general';
+    // Strip non-alphanumeric ASCII characters (keeps spaces)
+    return String(cat).replace(/[^a-zA-Z0-9\s]/g, '').trim().toLowerCase() || 'general';
+  };
+
+  // Simple deterministic hash -> HSL color generator for category
+  const categoryColors = (cat) => {
+    const key = normalizeCategory(cat);
+    // djb2
+    let hash = 5381;
+    for (let i = 0; i < key.length; i++) {
+      hash = ((hash << 5) + hash) + key.charCodeAt(i); /* hash * 33 + c */
+      hash = hash & hash;
+    }
+    const hue = Math.abs(hash) % 360;
+    // pastel background, medium border, darker text
+    const bg = `hsl(${hue}, 70%, 92%)`;
+    const border = `hsl(${hue}, 60%, 76%)`;
+    const color = `hsl(${hue}, 55%, 28%)`;
+    return { bg, border, color };
+  };
   const handleToggleComplete = async () => {
     // If currently editing, cancel the edit session first
     if (isEditing) {
@@ -203,9 +226,19 @@ const TodoItem = ({ todo, onTodoUpdated, onTodoDeleted }) => {
           <>
             <span className="todo-title">{todo.title}</span>
             <div className="todo-category">
-              <span className="category-display">
-                {todo.category || '📋 General'}
-              </span>
+              { /* apply category-specific color styling */ }
+              {(() => {
+                const cat = todo.category || '📋 General';
+                const { bg, border, color } = categoryColors(cat);
+                return (
+                  <span
+                    className="category-display"
+                    style={{ background: bg, border: `1px solid ${border}`, color: color }}
+                  >
+                    {cat}
+                  </span>
+                );
+              })()}
             </div>
             <div className="todo-priority">
               <span
