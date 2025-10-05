@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
 const TodoForm = ({ onTodoAdded }) => {
   const [title, setTitle] = useState('');
@@ -128,14 +126,13 @@ const TodoForm = ({ onTodoAdded }) => {
           </div>
           {hasDueDate && (
             <div className="date-picker-section">
-              <DatePicker
-                selected={dueDate}
-                onChange={(date) => setDueDate(date)}
-                dateFormat="yyyy-MM-dd"
-                placeholderText="Select due date"
-                minDate={new Date()}
-                className="date-picker"
+              <input
+                type="date"
+                value={dueDate ? dueDate.toISOString().split('T')[0] : ''}
+                onChange={(e) => setDueDate(e.target.value ? new Date(e.target.value) : null)}
+                className="todo-input"
                 disabled={loading}
+                min={new Date().toISOString().split('T')[0]}
                 aria-label="Select todo due date"
               />
             </div>
